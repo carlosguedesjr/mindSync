@@ -1,0 +1,7 @@
+{
+  "name": "infinity-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

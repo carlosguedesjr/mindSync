@@ -1,0 +1,5 @@
+<div mat-dialog-content>
+  <ng-lottie *ngIf="loader" [options]="loaderOpts" width="150px" height="150px"></ng-lottie>
+  <ng-lottie *ngIf="!loader" [options]="successOpts" width="150px" height="150px" (complete)="close()"></ng-lottie>
+  <h2 class="msg">{{ msg }}</h2>
+</div>

@@ -1,0 +1,239 @@
+<div class="header">
+  <h2 class="title">Relatório Comparativo Mindleader Completo</h2>
+</div>
+
+<div class="container">
+  <mat-card class="mat-elevation-z8 p-0 mb-2">
+    <mat-card-content class="p-3">
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <div fxLayout="row" fxLayoutGap="20px">
+          <div fxFlex="30">
+            <app-input label="Assessment" type="select" [items]="assessments" [control]="controls.assessmentId">
+            </app-input>
+          </div>
+          <div fxFlex="20">
+            <app-input label="Aluno 1" type="select" [items]="students" selectName="nameEmail"
+              [control]="controls.studentId_1"></app-input>
+          </div>
+          <div fxFlex="20">
+            <app-input label="Aluno 2" type="select" [items]="students" selectName="nameEmail"
+              [control]="controls.studentId_2"></app-input>
+          </div>
+          <div fxFlex="20">
+            <app-input label="Código de acesso" type="select" [items]="accessList" selectName="code"
+              [control]="controls.accessId"></app-input>
+          </div>
+          <div fxFlex="10">
+            <button mat-raised-button color="primary" [disabled]="formGroup.invalid" *ngIf="!loading">
+              Buscar
+            </button>
+            <mat-progress-spinner mode="indeterminate" diameter="25" class="ml-2" *ngIf="loading">
+            </mat-progress-spinner>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <div id="pdfDiv" #pdfDiv>
+    <mat-card class="mat-elevation-z8 p-0 mb-2" *ngIf="result && !loading">
+      <mat-card-content class="p-3 text-center">
+
+        <div id="pdfTable_1" #pdfTable_1>
+          <img [src]="result.studentOne.image ? result.studentOne.image : 'assets/image/not-found-user.png'"
+            class="student-thumbnail mx-auto my-1" alt="">
+          |
+          <img [src]="result.studentTwo.image ? result.studentTwo.image : 'assets/image/not-found-user.png'"
+            class="student-thumbnail mx-auto my-1" alt="">
+
+
+          <h2 class="fw-bold">Aluno 1: {{ result.studentOne.name }} | Aluno 2: {{ result.studentTwo.name }}</h2>
+          <div class="infos" fxLayout="row" fxLayoutGap="20px">
+            <div fxFlex class="info">
+              <h4 class="fw-bold">Duração</h4>
+              {{ result.applicationOne._duration || '---' }} <br> {{ result.applicationTwo._duration || '---' }}
+            </div>
+            <div fxFlex class="info">
+              <h4 class="fw-bold">Escolaridade</h4>
+              {{ result.studentOne.scholarity || '---' }} <br> {{ result.studentTwo.scholarity || '---' }}
+            </div>
+            <div fxFlex class="info">
+              <h4 class="fw-bold">Perfil</h4>
+              <ng-container *ngIf="!result.studentOne.profiles?.length">---</ng-container>
+              <ng-container *ngIf="result.studentOne.profiles?.length">
+                <ng-container *ngIf="result.studentOne.profiles[0].type === 'lion'">Leão</ng-container>
+                <ng-container *ngIf="result.studentOne.profiles[0].type === 'dog'">Cachorro</ng-container>
+                <ng-container *ngIf="result.studentOne.profiles[0].type === 'monkey'">Macaco</ng-container>
+                <ng-container *ngIf="result.studentOne.profiles[0].type === 'peacock'">Pavão</ng-container>
+                <br>
+                <ng-container *ngIf="result.studentOne.profiles[1].type === 'lion'">Leão</ng-container>
+                <ng-container *ngIf="result.studentOne.profiles[1].type === 'dog'">Cachorro</ng-container>
+                <ng-container *ngIf="result.studentOne.profiles[1].type === 'monkey'">Macaco</ng-container>
+                <ng-container *ngIf="result.studentOne.profiles[1].type === 'peacock'">Pavão</ng-container>
+              </ng-container>
+              <br>
+              <ng-container *ngIf="!result.studentTwo.profiles?.length">---</ng-container>
+              <ng-container *ngIf="result.studentTwo.profiles?.length">
+                <ng-container *ngIf="result.studentTwo.profiles[0].type === 'lion'">Leão</ng-container>
+                <ng-container *ngIf="result.studentTwo.profiles[0].type === 'dog'">Cachorro</ng-container>
+                <ng-container *ngIf="result.studentTwo.profiles[0].type === 'monkey'">Macaco</ng-container>
+                <ng-container *ngIf="result.studentTwo.profiles[0].type === 'peacock'">Pavão</ng-container>
+                <br>
+                <ng-container *ngIf="result.studentTwo.profiles[1].type === 'lion'">Leão</ng-container>
+                <ng-container *ngIf="result.studentTwo.profiles[1].type === 'dog'">Cachorro</ng-container>
+                <ng-container *ngIf="result.studentTwo.profiles[1].type === 'monkey'">Macaco</ng-container>
+                <ng-container *ngIf="result.studentTwo.profiles[1].type === 'peacock'">Pavão</ng-container>
+              </ng-container>
+            </div>
+            <div fxFlex class="info">
+              <h4 class="fw-bold">Geração</h4>
+              {{ result.studentOne.getGeneration || '---' }} <br> {{ result.studentTwo.getGeneration || '---' }}
+            </div>
+            <div fxFlex class="info">
+              <h4 class="fw-bold">Setênio</h4>
+              {{ result.studentOne.getSeven || '---' }} <br> {{ result.studentTwo.getSeven || '---' }}
+            </div>
+            <div fxFlex class="info">
+              <h4 class="fw-bold">Cargo</h4>
+              {{ result.studentOne.company?._post?.name || '---' }} <br> {{ result.studentTwo.company?._post?.name || '---' }}
+            </div>
+            <div fxFlex class="info">
+              <h4 class="fw-bold">Área</h4>
+              {{ result.studentOne.company?._area?.name || '---' }} <br> {{ result.studentTwo.company?._area?.name || '---' }}
+            </div>
+          </div>
+
+          <div class="groups mt-5" fxLayout="row wrap" fxLayoutAlign="center center">
+            <div fxFlex="23" class="group mb-4 mx-1" *ngFor="let group of result.assessmentOne._groups">
+              <img [src]="group.image ? group.image : 'assets/image/not-found-user.png'" class="thumbnail mx-auto mb-1"
+                alt="">
+
+              <div class="diverge" fxLayout="row">
+                <div fxFlex="50">
+                  <h4 class="mb-0 fw-bold">{{ getPercent(group, result.applicationOne).diverge | number: '1.0-2' }}% - {{ getPercent(group, result.applicationTwo).diverge | number: '1.0-2' }}%</h4>
+                </div>
+                <div fxFlex="50" class="text-right">
+                  <h4 class="mb-0 fw-bold">D</h4>
+                </div>
+              </div>
+              <div class="name">
+                <h4 class="mb-0">{{ group.name }}</h4>
+              </div>
+              <div class="converge" fxLayout="row">
+                <div fxFlex="50">
+                  <h4 class="mb-0" fw-bold>{{ getPercent(group, result.applicationOne).converge | number: '1.0-2' }}% - {{ getPercent(group, result.applicationTwo).converge | number: '1.0-2' }}%
+                  </h4>
+                </div>
+                <div fxFlex="50" class="text-right">
+                  <h4 class="mb-0 fw-bold">C</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!--<img [src]="result.studentOne.image ? result.studentTwo.image : 'assets/image/not-found-user.png'"
+            class="student-thumbnail mx-auto my-1" alt="">
+
+          <h2 class="fw-bold">Aluno 2: {{ result.studentTwo.name }}</h2>
+          <div class="infos" fxLayout="row" fxLayoutGap="20px">
+            <div fxFlex class="info">
+              <h4 class="fw-bold">Duração</h4>
+              {{ result.applicationTwo._duration || '---' }}
+            </div>
+            <div fxFlex class="info">
+              <h4 class="fw-bold">Escolaridade</h4>
+              {{ result.studentTwo.scholarity || '---' }}
+            </div>
+            <div fxFlex class="info">
+              <h4 class="fw-bold">Perfil</h4>
+              <ng-container *ngIf="!result.studentTwo.profiles?.length">---</ng-container>
+              <ng-container *ngIf="result.studentTwo.profiles?.length">
+                <ng-container *ngIf="result.studentTwo.profiles[0].type === 'lion'">Leão</ng-container>
+                <ng-container *ngIf="result.studentTwo.profiles[0].type === 'dog'">Cachorro</ng-container>
+                <ng-container *ngIf="result.studentTwo.profiles[0].type === 'monkey'">Macaco</ng-container>
+                <ng-container *ngIf="result.studentTwo.profiles[0].type === 'peacock'">Pavão</ng-container>
+                <br>
+                <ng-container *ngIf="result.studentTwo.profiles[1].type === 'lion'">Leão</ng-container>
+                <ng-container *ngIf="result.studentTwo.profiles[1].type === 'dog'">Cachorro</ng-container>
+                <ng-container *ngIf="result.studentTwo.profiles[1].type === 'monkey'">Macaco</ng-container>
+                <ng-container *ngIf="result.studentTwo.profiles[1].type === 'peacock'">Pavão</ng-container>
+              </ng-container>
+            </div>
+            <div fxFlex class="info">
+              <h4 class="fw-bold">Geração</h4>
+              {{ result.studentTwo.getGeneration || '---' }}
+            </div>
+            <div fxFlex class="info">
+              <h4 class="fw-bold">Setênio</h4>
+              {{ result.studentTwo.getSeven || '---' }}
+            </div>
+            <div fxFlex class="info">
+              <h4 class="fw-bold">Cargo</h4>
+              {{ result.studentTwo.company?._post?.name || '---' }}
+            </div>
+            <div fxFlex class="info">
+              <h4 class="fw-bold">Área</h4>
+              {{ result.studentTwo.company?._area?.name || '---' }}
+            </div>
+          </div>-->
+
+          <!--<div class="groups mt-5" fxLayout="row wrap" fxLayoutAlign="center center">
+            <div fxFlex="23" class="group mb-4 mx-1" *ngFor="let group of result.assessmentTwo._groups">
+              <img [src]="group.image ? group.image : 'assets/image/not-found-user.png'" class="thumbnail mx-auto mb-1"
+                alt="">
+
+              <div class="diverge" fxLayout="row">
+                <div fxFlex="50">
+                  <h4 class="mb-0 fw-bold">{{ getPercent(group, result.applicationTwo).diverge | number: '1.0-2' }}%</h4>
+                </div>
+                <div fxFlex="50" class="text-right">
+                  <h4 class="mb-0 fw-bold">D</h4>
+                </div>
+              </div>
+              <div class="name">
+                <h4 class="mb-0">{{ group.name }}</h4>
+              </div>
+              <div class="converge" fxLayout="row">
+                <div fxFlex="50">
+                  <h4 class="mb-0" fw-bold>{{ getPercent(group, result.applicationTwo).converge | number: '1.0-2' }}%</h4>
+                </div>
+                <div fxFlex="50" class="text-right">
+                  <h4 class="mb-0 fw-bold">C</h4>
+                </div>
+              </div>
+            </div>
+          </div>-->
+        </div>
+
+        <div id="pdfTable_2" #pdfTable_2>
+          <table>
+            <tbody>
+              <ng-container *ngFor="let group of result.assessmentOne._groups">
+                <tr>
+                  <th class="text-center border">Grupo</th>
+                  <th class="text-center border">Questão</th>
+                  <th class="text-center border">Enunciado</th>
+                  <th class="text-center border">Resp.</th>
+                  <th class="text-center border">Resp. Aluno 1</th>
+                  <th class="text-center border">Resp. Aluno 2</th>
+                </tr>
+                <tr *ngFor="let question of group._questions; index as questionIndex">
+                  <td class="border vertical" [attr.rowspan]="group._questions.length" width="50"
+                    *ngIf="questionIndex === 0">
+                    <div class="vertical-content text-center">{{ group.name }}</div>
+                  </td>
+                  <td class="text-center border">{{ questionIndex + 1 }}</td>
+                  <td class="border"> {{ question.text | removeHtml }} </td>
+                  <td class="text-center border">{{ question.result }}</td>
+                  <td class="text-center border">{{ getResultByStudent(result.applicationOne, question) || '---' }}</td>
+                  <td class="text-center border">{{ getResultByStudent(result.applicationTwo, question) || '---' }}</td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

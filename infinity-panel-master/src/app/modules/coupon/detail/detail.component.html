@@ -1,0 +1,44 @@
+<mat-toolbar color="primary">
+  <span>Cupom</span>
+</mat-toolbar>
+<div mat-dialog-content>
+  
+  <mat-list>
+    <mat-list-item>
+      <mat-icon matListIcon>more_horiz</mat-icon>
+      <div matLine><strong> Código </strong></div>
+      <div matLine class="info"> {{ object.code }} </div>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon matListIcon>attach_money</mat-icon>
+      <div matLine><strong> Valor </strong></div>
+      <div matLine class="info" *ngIf="object.percentage"> {{ object.value }}% </div>
+      <div matLine class="info" *ngIf="!object.percentage"> {{ object.value | currency:'BRL' }} </div>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon matListIcon>calendar_today</mat-icon>
+      <div matLine><strong> Validade </strong></div>
+      <div matLine class="info"> {{ object.validity | date:'dd/MM/yyyy' }} </div>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon matListIcon>remove</mat-icon>
+      <div matLine><strong> Usado </strong></div>
+      <div matLine class="info"> {{ object.used }} </div>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon matListIcon>add</mat-icon>
+      <div matLine><strong> Quantidade </strong></div>
+      <div matLine class="info"> {{ object.quantity }} </div>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon matListIcon color="warn" *ngIf="object.deletedAt">cancel</mat-icon>
+      <mat-icon matListIcon color="success" *ngIf="!object.deletedAt">check_circle</mat-icon>
+      <div matLine><strong> Ativo </strong></div>
+    </mat-list-item>
+  </mat-list>
+</div>

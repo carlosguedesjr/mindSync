@@ -1,0 +1,118 @@
+<div class="header">
+    <h2 class="title">Relatório Assessment New (Neuro)</h2>
+</div>
+
+<div class="container">
+    <mat-card class="mat-elevation-z8 p-0 mb-2">
+        <mat-card-content class="p-3">
+            <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+                <div fxLayout="row" fxLayoutGap="20px">
+                    <div fxFlex="45">
+                        <app-input label="Assessment" type="select" [items]="assessments"
+                            [control]="controls.assessmentId"></app-input>
+                    </div>
+                    <div fxFlex="45">
+                        <app-input label="Código de acesso" type="select" [items]="accessList" selectName="code"
+                            [control]="controls.accessId"></app-input>
+                    </div>
+                    <div fxFlex="10">
+                        <button mat-raised-button color="primary" [disabled]="formGroup.invalid"
+                            *ngIf="!loading">Buscar</button>
+                        <mat-progress-spinner mode="indeterminate" diameter="25" class="ml-2" *ngIf="loading">
+                        </mat-progress-spinner>
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="mat-elevation-z8 p-0 mb-2" *ngIf="result">
+        <mat-card-content class="p-3">
+            <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+            <div class="text-end mb-3">
+                <button mat-raised-button color="primary" (click)="downlCSV()">Download CSV</button>
+            </div>
+
+            <div class="table-responsive" *ngIf="!loading">
+                <table>
+                    <tbody>
+                        <tr>
+                            <th>Respostas Esperadas</th>
+                            <th>Divergência</th>
+                            <th>Ranking D</th>
+                            <th>Convergência</th>
+                            <th>Ranking C</th>
+                            <th>Idade</th>
+                            <th>Perfil 1</th>
+                            <th>Perfil 2</th>
+                            <th>Genêro</th>
+                            <th>Setênio</th>
+                            <th>Geração</th>
+                            <th>Filhos</th>
+                            <th>Entidade</th>
+                            <th>Área</th>
+                            <th>Cargo</th>
+                            <th>Escolaridade</th>
+                            <ng-container *ngFor="let group of result.assessment._groups; index as groupIndex">
+                                <ng-container *ngFor="let question of group._questions; index as questionIndex">
+                                    <th>
+                                        <div> {{ group.name }} | {{ questionIndex + 1 }} | {{ question.result }}</div>
+                                    </th>
+                                </ng-container>
+                            </ng-container>
+                        </tr>
+                        <ng-container *ngFor="let application of result.applications; index as applicationIndex">
+                            <tr>
+                                <td>{{ application._student.name }}</td>
+                                <td>{{ application._student.diverge }}%</td>
+                                <td>{{ application._student.rankDiverge }}</td>
+                                <td>{{ application._student.converge }}%</td>
+                                <td>{{ application._student.rankConverge }}</td>
+                                <td>{{ application._student.getAge }}</td>
+                                <td>
+                                    <ng-container *ngIf="!application._student.profiles">---</ng-container>
+                                    <ng-container *ngIf="application._student.profiles">
+                                        <ng-container *ngIf="application._student.profiles[0].type === 'lion'">Leão
+                                        </ng-container>
+                                        <ng-container *ngIf="application._student.profiles[0].type === 'dog'">Cachorro
+                                        </ng-container>
+                                        <ng-container *ngIf="application._student.profiles[0].type === 'monkey'">Macaco
+                                        </ng-container>
+                                        <ng-container *ngIf="application._student.profiles[0].type === 'peacock'">Pavão
+                                        </ng-container>
+                                    </ng-container>
+                                </td>
+                                <td>
+                                    <ng-container *ngIf="!application._student.profiles">---</ng-container>
+                                    <ng-container *ngIf="application._student.profiles">
+                                        <ng-container *ngIf="application._student.profiles[1].type === 'lion'">Leão
+                                        </ng-container>
+                                        <ng-container *ngIf="application._student.profiles[1].type === 'dog'">Cachorro
+                                        </ng-container>
+                                        <ng-container *ngIf="application._student.profiles[1].type === 'monkey'">Macaco
+                                        </ng-container>
+                                        <ng-container *ngIf="application._student.profiles[1].type === 'peacock'">Pavão
+                                        </ng-container>
+                                    </ng-container>
+                                </td>
+                                <td>{{ application._student.genre }}</td>
+                                <td>{{ application._student.getSeven }}</td>
+                                <td>{{ application._student.getGeneration }}</td>
+                                <td>{{ application._student.childrens }}</td>
+                                <td>{{ application._student.company._department?.name || '---' }}</td>
+                                <td>{{ application._student.company._area?.name || '---' }}</td>
+                                <td>{{ application._student.company._post?.name || '---' }}</td>
+                                <td>{{ application._student.scholarity }}</td>
+                                <ng-container *ngFor="let ans of application.answers; index as ansIndex">
+                                    <td>{{ ans.getResultNeuro || '---' }}
+                                    </td>
+                                </ng-container>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

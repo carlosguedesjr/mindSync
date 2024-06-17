@@ -1,0 +1,14 @@
+.mat-form-field {
+  width: 100%;
+  margin-bottom: .5rem;
+}
+
+::ng-deep {
+  .mat-filter {
+    .mat-spinner {top: 17px !important;}
+    .noResultsMessage {
+      text-align: center;
+      font-size: .8rem !important;
+    }
+  }
+}

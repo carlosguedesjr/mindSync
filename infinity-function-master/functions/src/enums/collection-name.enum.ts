@@ -1,0 +1,17 @@
+export enum CollecionName {
+  Users = 'users',
+  Groups = 'groups',
+  Students = 'students',
+  Companies = 'companies',
+  Assessments = 'assessments',
+  Applications = 'applications',
+  CompanyPosts = 'company-posts',
+  CompanyAreas = 'company-areas',
+  Subscriptions = 'subscriptions',
+  AccessContents = 'access-contents',
+  CompanyBranches = 'company-branches',
+  AssessmentGroups = 'assessment-groups',
+  CompanyDepartments = 'company-departments',
+  AssessmentQuestions = 'assessment-questions',
+  AssessmentInstructions = 'assessment-instructions',
+}

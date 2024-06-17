@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Formulário de grupo</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formGroup">
+    <app-input label="Nome" [control]="controls.name"></app-input>
+
+    <app-input label="Permissões" type="select" [multiple]="true" [items]="permissions" [control]="controls.permissions"></app-input>
+  </form>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end center">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-raised-button color="primary" [disabled]="formGroup.invalid" *ngIf="!saving" (click)="onSubmit()">Salvar</button>
+  <mat-progress-spinner mode="indeterminate" diameter="25" class="ml-2" *ngIf="saving"></mat-progress-spinner>
+</div>

@@ -1,0 +1,114 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+ion-button {text-transform: none;}
+ion-list {background: transparent !important;}
+ion-alert, ion-picker, ion-modal, ion-loading, ion-menu {backdrop-filter: blur(7px);}
+
+img.dark {display: none;}
+
+#vertical-align {
+  display: flex;
+  min-height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+#list-empty {
+  display: flex;
+  align-items: center;
+
+  & > div {
+    width: 100%;
+
+    h4 {color: var(--ion-color-step-500);}
+    ion-icon {font-size: 5rem;}
+  }
+}
+
+ion-item {
+  --background: none;
+  --padding-start: .5rem;
+  --inner-padding-end: .5rem;
+}
+
+ion-button {
+  height: auto;
+  --border-radius: 1rem;
+  --padding-top: 1.1rem;
+  --padding-bottom: 1.1rem;
+}
+
+ion-alert {
+  .alert-radio-group .alert-radio-label {
+    white-space: pre-wrap;
+  }
+}
+
+.ql-editor {
+  padding: 0;
+  .ql-video {
+    width: 100%;
+    min-height: 12rem;
+  }
+}
+
+// ion-content{
+//   --padding-top: 100px !important;
+//   }
+
+ion-content {
+  --padding-top: 0 !important;
+  --padding-left: 0 !important;
+  --padding-right: 0 !important;
+  --padding-bottom: 0 !important;
+
+}
+
+ion-item {
+  background: #fff !important;
+  border-radius: 15px !important;
+  padding: 5px !important;
+  margin: 0 0 10px 0;
+ }
+
+.bgColor {
+  background-image: url('../src/assets/fundo-app-WEB.png');
+  background-position: center;
+  background-size: auto;
+  background-repeat: repeat;
+  padding: 20px 10px 20px 10px;
+ }
+
+
+@media (max-width: 991px) {
+  #list-empty {min-height: 100%;}
+}
+@media (prefers-color-scheme: dark) {
+  img.dark {display: initial;}
+  img.light {display: none;}
+}

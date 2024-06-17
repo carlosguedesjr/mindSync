@@ -1,0 +1,41 @@
+<mat-nav-list *ngIf="_storage.getUser">
+  <div class="profile-card">
+    <!-- <img [src]="_storage.getUser.image ? _storage.getUser.image : 'assets/image/not-found-user.png'" alt=""> -->
+    <img [src]="'assets/image/logo-mindsync-new.png'" alt="">
+    <div class="header">
+      <h2>{{ _storage.getUser.name }}</h2>
+      <h4>{{ _storage.getUser.email }}</h4>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <h2 matSubheader>Menu</h2>
+
+  <div *ngFor="let item of menuItems" [hidden]="item.hidden">
+    <a mat-list-item *ngIf="!item.subItems" (click)="closeSideBar()" routerLinkActive="mat-list-single-selected-option" [routerLink]="item.url">
+      <mat-icon matListIcon>{{ item.icon }}</mat-icon>
+      <h3 matLine>{{ item.title }}</h3>
+    </a>
+
+    <mat-accordion *ngIf="item.subItems">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon matListIcon>{{ item.icon }}</mat-icon>
+            <span>{{ item.title }}</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngFor="let subItem of item.subItems" [hidden]="subItem.hidden">
+          <a mat-list-item (click)="closeSideBar()" routerLinkActive="mat-list-single-selected-option" [routerLink]="subItem.url">
+            <mat-icon matListIcon>{{ subItem.icon }}</mat-icon>
+            <h3 matLine>{{ subItem.title }}</h3>
+          </a>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+  <mat-divider></mat-divider>
+
+</mat-nav-list>

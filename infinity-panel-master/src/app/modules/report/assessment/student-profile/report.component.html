@@ -1,0 +1,93 @@
+<div class="header">
+  <h2 class="title">Relatório Mindset Profile Individual</h2>
+</div>
+
+<div class="container">
+  <mat-card class="mat-elevation-z8 p-0 mb-2">
+    <mat-card-content class="p-3">
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <div fxLayout="row" fxLayoutGap="20px">
+          <div fxFlex="30">
+            <app-input label="Assessment" type="select" [items]="assessments" [control]="controls.assessmentId">
+            </app-input>
+          </div>
+          <div fxFlex="30">
+            <app-input label="Estudante" type="select" [items]="students" selectName="nameEmail"
+              [control]="controls.studentId"></app-input>
+          </div>
+          <div fxFlex="20">
+            <app-input label="Código de acesso" type="select" [items]="accessList" selectName="code"
+              [control]="controls.accessId"></app-input>
+          </div>
+          <div fxFlex="20">
+            <button mat-raised-button color="primary" [disabled]="formGroup.invalid" *ngIf="!loading">Buscar</button>
+            <mat-progress-spinner mode="indeterminate" diameter="25" class="ml-2" *ngIf="loading">
+            </mat-progress-spinner>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+    <mat-card class="mat-elevation-z8 p-0 mb-2">
+      <mat-card-content class="p-3">
+        <button mat-icon-button color="primary" (click)="openExpModal()">
+          <mat-icon>download</mat-icon>
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </mat-card>
+
+  <mat-card class="mat-elevation-z8 p-0 mb-2" *ngIf="result">
+    <mat-card-content class="p-3">
+      <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+      <div class="text-center">
+        <h4 class="mb-0"><b>Aluno:</b> {{ result.student.name || '---' }}</h4>
+        <h4 class="mb-0"><b>E-mail:</b> {{ result.student.email || '---' }}</h4>
+        <h4><b>Duração:</b> {{ result.application._duration || '---' }}</h4>
+      </div>
+
+      <div class="table-responsive" *ngIf="!loading">
+        <table>
+          <tbody>
+            <!-- PROFILE -->
+            <tr *ngFor="let profile of result.student.profiles; index as profileIndex">
+              <td class="border vertical" rowspan="4" width="50" *ngIf="profileIndex === 0">
+                <div class="vertical-content text-center">Geral</div>
+              </td>
+              <td class="text-center border">
+                <ng-container *ngIf="profile.type === 'lion'">Leão</ng-container>
+                <ng-container *ngIf="profile.type === 'dog'">Cachorro</ng-container>
+                <ng-container *ngIf="profile.type === 'monkey'">Macaco</ng-container>
+                <ng-container *ngIf="profile.type === 'peacock'">Pavão</ng-container>
+              </td>
+              <td class="text-center border">{{ profile.value | number: '1.0-2' }}%</td>
+            </tr>
+
+            <!-- GROUPS -->
+            <ng-container *ngFor="let group of result.groups; index as groupIndex">
+              <tr>
+                <td class="border vertical" rowspan="4" width="50">
+                  <div class="vertical-content text-center">{{ group.name }}</div>
+                </td>
+                <td class="text-center border">Cachorro</td>
+                <td class="text-center border">{{ group.result[0].value | number: '1.0-2' }}%</td>
+              </tr>
+              <tr>
+                <td class="text-center border">Leão</td>
+                <td class="text-center border">{{ group.result[1].value | number: '1.0-2' }}%</td>
+              </tr>
+              <tr>
+                <td class="text-center border">Macaco</td>
+                <td class="text-center border">{{ group.result[2].value | number: '1.0-2' }}%</td>
+              </tr>
+              <tr>
+                <td class="text-center border">Pavão</td>
+                <td class="text-center border">{{ group.result[3].value | number: '1.0-2' }}%</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

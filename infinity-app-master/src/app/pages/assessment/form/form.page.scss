@@ -1,0 +1,100 @@
+ion-content {
+  ion-slides {
+    min-height: calc(100% - 4px);
+   
+    ion-slide {
+      display: block;
+      padding: 1rem 2rem;
+      text-align: initial;
+
+      ion-item.question {
+        --background: none;
+        --padding-start: 0;
+        --inner-padding-end: 0;
+
+        ion-note[slot="start"] {
+          padding: 0;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          font-weight: 600;
+          font-size: 1.2rem;
+          border-radius: 5px;
+          align-items: center;
+          justify-content: center;
+          margin: auto 1rem auto 0;
+          color: var(--ion-color-dark-contrast);
+          background-color: var(--ion-color-dark);
+        }
+      }
+
+      ion-radio-group.neuro {
+        ion-row {
+          margin: 0 -1rem;
+          ion-col {
+            padding: 0;
+            ion-item {
+              --padding-start: 0;
+              --inner-padding-end: 0;
+              ion-radio {margin: auto;}
+              ion-icon {
+                display: block;
+                font-size: 3rem;
+                margin: 0 auto .5rem auto;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #resultProfile {
+    margin: 1rem 3rem;
+
+    .animal {
+      position: relative;
+      
+      &.active {
+        img, .bottom .name {opacity: 1;}
+      }
+
+      img {
+        opacity: .5;
+        display: block;
+      }
+
+      .bottom {
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        padding: .5rem;
+        line-height: 1;
+        position: absolute;
+        align-items: flex-end;
+        text-shadow: 0 0 5px black;
+        justify-content: space-between;
+
+        .percent {
+          font-size: 1.3rem;
+          color: var(--ion-color-primary);
+        }
+        
+        .name {
+          opacity: .5;
+          font-size: .8rem;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+ion-footer {
+  padding: 1rem;
+}
+
+@media (min-width: 992px) {
+  #resultProfile {max-width: 500px;}
+}

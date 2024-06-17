@@ -1,0 +1,85 @@
+@import './theme';
+
+@import './plugins/dropzone';
+
+@import './components/img';
+@import './components/form';
+@import './components/font';
+@import './components/table';
+@import './components/spacing';
+
+html, body {height: 100%;}
+body {margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.container {margin-bottom: 5rem;}
+
+.dialog-view .mat-dialog-content {padding: 0;}
+.dialog-delete, .dialog-view {
+  mat-dialog-container {
+    padding: 0;
+  }
+  .mat-dialog-content {margin: 0;}
+}
+mat-table .noData {
+  min-height: 48px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+ngx-dropzone ngx-dropzone-label:focus {outline: none;}
+
+.ck-editor__editable_inline {max-height: 30vh;}
+
+// MATERIAL
+app-sidebar {
+  .mat-expansion-panel-body {
+    padding: 0;
+    .mat-list-item-content {padding: 0 30px !important;}
+  }
+}
+
+.mat-fab.fab-bottom-right {
+  right: 1rem;
+  bottom: 5rem;
+  position: fixed;
+}
+
+.mat-icon-button.mat-success {
+  color: mat-color($success);
+}
+.mat-raised-button.mat-success {
+  background-color: mat-color($success);
+  color: mat-color($success, default-contrast);
+}
+mat-icon[color="success"] {
+  color: mat-color($success);
+}
+
+snack-bar-container.mat-warn {
+  color: #FFF;
+  background: mat-color($warn);
+  .mat-simple-snackbar-action {color: #fff;}
+}
+snack-bar-container {
+  &.mat-success {
+    color: mat-color($success, default-contrast);
+    background: mat-color($success);
+    .mat-simple-snackbar-action {color: mat-color($success, default-contrast);}
+  }
+  &.mat-warn {
+    color: mat-color($warn, default-contrast);
+    background: mat-color($warn);
+    .mat-simple-snackbar-action {color: mat-color($warn, default-contrast);}
+  }
+}
+
+.color-snackbar {
+  background: mat-color($primary);
+  margin-bottom: 50vh !important;
+  color: white;
+}
+
+.color-snackbar button {
+  background: mat-color($primary);
+  color: white;
+  border: none;
+}

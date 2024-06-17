@@ -1,0 +1,31 @@
+/* ----------------------------------------------------------------------- */
+// FONT
+/* ----------------------------------------------------------------------- */
+
+// LINK
+a {text-decoration: none !important;}
+
+// ALIGN
+.text-start {text-align: start !important;}
+.text-center {text-align: center !important;}
+.text-end {text-align: end !important;}
+.text-justify {text-align: justify !important;}
+
+// WEIGHT
+.fw-thin {font-weight: 100 !important;}
+.fw-semiLight {font-weight: 200 !important;}
+.fw-light {font-weight: 300 !important;}
+.fw-regular {font-weight: 400 !important;}
+.fw-medium {font-weight: 500 !important;}
+.fw-semiBold {font-weight: 600 !important;}
+.fw-bold {font-weight: 700 !important;}
+.fw-extraBold {font-weight: 800 !important;}
+.fw-black {font-weight: 900 !important;}
+
+// BREAK LINE
+.text-wrap {white-space: normal !important;}
+.truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

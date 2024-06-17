@@ -1,0 +1,88 @@
+<ion-content>
+  <div id="vertical-align">
+
+    <div class="container">
+      <div id="logo" class="ion-text-center">
+        <img src="assets/logo.png" height="200" class="light" alt="">
+        <img src="assets/logo-white.png" height="200" class="dark" alt="">
+      </div>
+
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+
+        <h6 id="title" class="ion-text-center ion-text-uppercase">
+          Cadastre-se<br>
+          A Infinity NeuroBusiness School
+        </h6>
+
+        <div class="ion-margin-top">
+          <ion-item>
+            <ion-label position="floating">Nome</ion-label>
+            <ion-input type="text" formControlName="name"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="controls.name.value && controls.name.hasError('invalid')">
+            <ion-icon slot="start" name="close" color="danger" size="small" class="ion-margin-end"></ion-icon>
+            <ion-label color="danger"><small>Precisa conter nome e sobrenome!</small></ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">CPF</ion-label>
+            <ion-input type="text" formControlName="cpf" [brmasker]="{mask: '000.000.000-00', type: 'num'}" maxlength="14" inputmode="decimal" (ionBlur)="validateCPF()"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="controls.cpf.value && (controls.cpf.hasError('invalid') || controls.cpf.hasError('exist'))">
+            <ion-icon slot="start" name="close" color="danger" size="small" class="ion-margin-end"></ion-icon>
+            <ion-label color="danger">
+              <small *ngIf="controls.cpf.hasError('invalid')">CPF inválido!</small>
+              <small *ngIf="controls.cpf.hasError('exist')">CPF já existente!</small>
+            </ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Telefone</ion-label>
+            <ion-input type="text" formControlName="phone" [brmasker]="{phone: true}" maxlength="15"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">E-mail</ion-label>
+            <ion-input type="email" formControlName="email" (ionBlur)="validateEmail()"></ion-input>
+          </ion-item>
+          <ion-item *ngIf="controls.email.value && controls.email.hasError('exist')">
+            <ion-icon slot="start" name="close" color="danger" size="small" class="ion-margin-end"></ion-icon>
+            <ion-label color="danger"><small>E-mail já existente!</small></ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Senha</ion-label>
+            <ion-input [type]="togglePass ? 'text' : 'password'" formControlName="password"></ion-input>
+            <ion-icon slot="end" class="ion-align-self-end" [name]="togglePass ? 'eye' : 'eye-off'" (click)="togglePass = !togglePass"></ion-icon>
+          </ion-item>
+          <ion-item *ngIf="controls.password.value && controls.password.hasError('pattern')">
+            <ion-icon slot="start" name="close" color="danger" size="small" class="ion-margin-end"></ion-icon>
+            <ion-label color="danger"><small>A senha deve conter letra, número!</small></ion-label>
+          </ion-item>
+          <ion-item *ngIf="controls.password.value && controls.password.hasError('minlength')">
+            <ion-icon slot="start" name="close" color="danger" size="small" class="ion-margin-end"></ion-icon>
+            <ion-label color="danger"><small>A senha deve conter no mínimo 8 caracteres!</small></ion-label>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Confirmar senha</ion-label>
+            <ion-input [type]="togglePass ? 'text' : 'password'" formControlName="confPassword"></ion-input>
+            <ion-icon slot="end" class="ion-align-self-end" [name]="togglePass ? 'eye' : 'eye-off'" (click)="togglePass = !togglePass"></ion-icon>
+          </ion-item>
+          <ion-item *ngIf="controls.confPassword.value && controls.confPassword.hasError('passNotSame')">
+            <ion-icon slot="start" name="close" color="danger" size="small" class="ion-margin-end"></ion-icon>
+            <ion-label color="danger"><small>As senhas não combinam!</small></ion-label>
+          </ion-item>
+        </div>
+
+        <div class="ion-text-center ion-margin-top">
+          <ion-button type="submit" expand="block" color="primary">Criar</ion-button>
+          <p>Já possui login no Infinity? <ion-router-link routerDirection="back" routerLink="/auth/entrar">Entrar</ion-router-link></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-text-center">
+  <p class="ion-no-margin"><small>
+    Ao me inscrever para criar uma conta, eu aceito as
+    políticas da Infinity de Termos de Serviço, Políticas
+    de Privacidade, Políticas de Direitos Autorais e Código de Conduta
+  </small></p>
+</ion-footer>

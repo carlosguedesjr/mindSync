@@ -1,0 +1,25 @@
+ion-content{
+  #vertical-align {
+    display: flex;
+    min-height: 100%;
+    align-items: center;
+
+    .container{
+      width: 100%;
+      padding: 0 2rem;
+      
+      ion-item{
+        --padding-start: 0;
+        --highlight-height: 1px;
+        --inner-border-width: 0 0 1px 0;
+      }
+
+      ion-button[type="submit"]{
+        font-size: .8rem;
+        --padding-end: 2rem;
+        --border-radius: 8px;
+        --padding-start: 2rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,53 @@
+<h1 mat-dialog-title>Formulário de usuário</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formGroup">
+
+    <div class="img-uploaded" *ngIf="image">
+      <button mat-mini-fab color="warn" (click)="deleteImage()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <img [src]="image.path" alt="">
+    </div>
+    <ngx-dropzone (change)="takeImage($event)" accept="image/jpeg,image/jpg,image/png" [multiple]="false" class="mb-2" *ngIf="!image">
+      <ngx-dropzone-label>Arraste os arquivos aqui ou clique para fazer o upload.</ngx-dropzone-label>
+    </ngx-dropzone>
+    
+    <app-input label="Nome" [control]="controls.name" cdkFocusInitial="true"></app-input>
+    <app-input label="E-mail" type="email" [control]="controls.email"></app-input>
+    
+    <div fxLayout="row" fxLayoutGap="20px">
+      <div fxFlex="50">
+        <app-input label="Grupos" type="select" [multiple]="true" [items]="groups" [control]="controls.groups"></app-input>
+      </div>
+      <div fxFlex="50">
+        <app-input label="Permissões" type="select" [multiple]="true" [items]="permissions" [control]="controls.permissions"></app-input>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="20px" *ngIf="!data.id">
+      <mat-form-field fxFlex="50">
+        <mat-label>Senha</mat-label>
+        <input matInput [type]="togglePass ? 'password' : 'text'" formControlName="password">
+        <button mat-icon-button matSuffix type="button" (click)="togglePass = !togglePass">
+          <mat-icon>{{ togglePass ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="controls.password.hasError('required')">Senha é <strong>obrigatório!</strong></mat-error>
+        <mat-error *ngIf="controls.password.hasError('minlength')">A senha deve conter no mínimo <strong>8 caracteres</strong></mat-error>
+        <mat-error *ngIf="controls.password.hasError('pattern')">A senha deve conter <strong>letra, número</strong> e <strong>1 caracter especial</strong></mat-error>
+      </mat-form-field>
+      <mat-form-field fxFlex="50">
+        <mat-label>Confirme sua senha</mat-label>
+        <input matInput [type]="togglePass ? 'password' : 'text'" formControlName="confirmPass">
+        <button mat-icon-button matSuffix type="button" (click)="togglePass = !togglePass">
+          <mat-icon>{{ togglePass ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error *ngIf="controls.confirmPass.hasError('required')">Confirme sua senha é <strong>obrigatório!</strong></mat-error>
+        <mat-error *ngIf="controls.confirmPass.hasError('passNotSame')">As senhas não <strong>coincidem!</strong></mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end center">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-raised-button color="primary" [disabled]="formGroup.invalid" *ngIf="!saving" (click)="onSubmit()">Salvar</button>
+  <mat-progress-spinner mode="indeterminate" diameter="25" class="ml-2" *ngIf="saving"></mat-progress-spinner>
+</div>

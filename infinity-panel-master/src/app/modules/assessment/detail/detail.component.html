@@ -1,0 +1,62 @@
+<mat-toolbar color="primary">
+  <span>Assessment</span>
+</mat-toolbar>
+<div mat-dialog-content>
+  
+  <mat-list>
+    <mat-list-item>
+      <mat-icon matListIcon>more_horiz</mat-icon>
+      <div matLine><strong> Nome </strong></div>
+      <div matLine class="info"> {{ object.name }} </div>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon matListIcon>fact_check</mat-icon>
+      <div matLine><strong> Tipo </strong></div>
+      <div matLine class="info"> {{ object.getTypeName }} </div>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon matListIcon>timer</mat-icon>
+      <div matLine><strong> Duração máxima </strong></div>
+      <div matLine class="info"> {{ object.duration }}min </div>
+    </mat-list-item>
+
+    <mat-list-item class="h-auto mb-2">
+      <mat-icon matListIcon>groups</mat-icon>
+      <div matLine><strong> Grupos </strong></div>
+      <div matLine>
+        <mat-chip-list>
+          <mat-chip *ngFor="let group of object._groups" color="primary" selected>{{ group.name }}</mat-chip>
+        </mat-chip-list>
+      </div>
+    </mat-list-item>
+
+    <mat-list-item class="h-auto mb-2">
+      <mat-icon matListIcon>feedback</mat-icon>
+      <div matLine><strong> Instruções </strong></div>
+      <div matLine>
+        <mat-chip-list>
+          <mat-chip *ngFor="let instruction of object._instructions" color="primary" selected>{{ instruction.title }}</mat-chip>
+        </mat-chip-list>
+      </div>
+    </mat-list-item>
+
+    <mat-list-item class="h-auto mb-2">
+      <mat-icon matListIcon>edit</mat-icon>
+      <div matLine><strong> Campos obrigatórios </strong></div>
+      <div matLine>
+        <mat-chip-list *ngIf="object.studentRequireds.length">
+          <mat-chip *ngFor="let required of object.studentRequireds" color="primary" selected>{{ getStudentRequiredName(required) }}</mat-chip>
+        </mat-chip-list>
+        <span class="info" *ngIf="!object.studentRequireds.length">---</span>
+      </div>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon matListIcon color="warn" *ngIf="object.deletedAt">cancel</mat-icon>
+      <mat-icon matListIcon color="success" *ngIf="!object.deletedAt">check_circle</mat-icon>
+      <div matLine><strong> Ativo </strong></div>
+    </mat-list-item>
+  </mat-list>
+</div>

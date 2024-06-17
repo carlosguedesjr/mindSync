@@ -1,0 +1,65 @@
+<div class="header" fxLayout="row" fxLayoutAlign="end center">
+  <div fxFlex="50" fxFlex.gt-md="80">
+    <h2 class="title">Áreas</h2>
+  </div>
+  <mat-form-field fxFlex="50" fxFlex.gt-md="20">
+    <mat-icon matPrefix>search</mat-icon>
+    <mat-label>Pesquisar</mat-label>
+    <input matInput [(ngModel)]="filter" name="filter" (keyup)="applyFilter()" placeholder="Ex. Fiergs...">
+    <button mat-button matSuffix mat-icon-button *ngIf="filter" (click)="filter=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<div class="container mat-elevation-z8">
+  <div class="table-responsive">
+    <mat-table matSort [dataSource]="dataSource">
+  
+      <ng-container matColumnDef="name">
+        <mat-header-cell mat-sort-header *matHeaderCellDef> Nome </mat-header-cell>
+        <mat-cell matRipple *matCellDef="let element" fxFlexAlign="stretch" (click)="openDetail(element)"> {{ element.name }} </mat-cell>
+      </ng-container>
+      
+      <ng-container matColumnDef="_department">
+        <mat-header-cell mat-sort-header *matHeaderCellDef> Entidade </mat-header-cell>
+        <mat-cell matRipple *matCellDef="let element" fxFlexAlign="stretch" (click)="openDetail(element)"> {{ element._department.name }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="deletedAt">
+        <mat-header-cell mat-sort-header *matHeaderCellDef fxFlex="10" fxLayoutAlign="center center"> Ativo </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" fxLayoutAlign="center center">
+          <mat-icon color="warn" *ngIf="element.deletedAt">cancel</mat-icon>
+          <mat-icon color="success" *ngIf="!element.deletedAt">check_circle</mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef fxFlex="10">  </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10">
+          <button mat-icon-button color="primary" (click)="openForm(element)" *ngIf="canUpdate">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button [color]="element.deletedAt ? 'success' : 'warn'" (click)="confirmDelete(element)" *ngIf="canDelete">
+            <mat-icon>{{ element.deletedAt ? 'check_circle' : 'delete' }}</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      
+      <div class="noData" *matNoDataRow fxLayout="row">
+        <div fxFlex="grow" fxFlexAlign="center" class="text-center">Nenhum registro encontrado!</div>
+      </div>
+    </mat-table>
+  </div>
+  
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+</div>
+
+<button mat-fab color="primary" class="fab-bottom-right" (click)="openForm()" *ngIf="canAdd">
+  <mat-icon>add</mat-icon>
+</button>
