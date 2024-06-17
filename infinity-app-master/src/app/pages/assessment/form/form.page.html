@@ -1,0 +1,244 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{ assessment?.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-progress-bar *ngIf="showingQuestion && !showSuccess" [value]="percentage"></ion-progress-bar>
+
+  <ion-slides #slides [scrollbar]="true" [options]="slideOpts" (ionSlideDidChange)="slideChanged()" *ngIf="!showSuccess">
+    <ion-slide *ngFor="let instruction of assessment?._instructions">
+
+      <div class="ql-container">
+        <div class="ql-editor" [innerHTML]="instruction.text | safe:'html'"></div>
+      </div>
+
+    </ion-slide>
+    <ion-slide *ngFor="let question of assessment?._questions; index as i">
+
+      <ion-item lines="none" class="question">
+        <ion-note slot="start">{{ i + 1 }}</ion-note>
+        <ion-label class="ion-text-wrap">
+          <div class="ql-container">
+            <div class="ql-editor" [innerHTML]="question.text | safe:'html'"></div>
+          </div>
+        </ion-label>
+      </ion-item>
+
+      <!-- NEURO -->
+      <ng-container *ngIf="question.type === 'neuro' && controls?.neuro">
+        <ng-container [formGroup]="formGroup">
+          <form formGroupName="neuro">
+            <ion-radio-group class="neuro" formControlName="satisfaction">
+              <ion-row>
+                <ion-col size="3">
+                  <ion-item button mode="md" lines="none">
+                    <ion-label>
+                      <ion-icon src="assets/icon/emotion-1.svg"></ion-icon>
+                      <ion-radio [value]="1"></ion-radio>
+                    </ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="3">
+                  <ion-item button mode="md" lines="none">
+                    <ion-label>
+                      <ion-icon src="assets/icon/emotion-2.svg"></ion-icon>
+                      <ion-radio [value]="2"></ion-radio>
+                    </ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="3">
+                  <ion-item button mode="md" lines="none">
+                    <ion-label>
+                      <ion-icon src="assets/icon/emotion-3.svg"></ion-icon>
+                      <ion-radio [value]="3"></ion-radio>
+                    </ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="3">
+                  <ion-item button mode="md" lines="none">
+                    <ion-label>
+                      <ion-icon src="assets/icon/emotion-4.svg"></ion-icon>
+                      <ion-radio [value]="4"></ion-radio>
+                    </ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-radio-group>
+            
+            <ion-radio-group class="neuro" formControlName="intensity">
+              <ion-row>
+                <ion-col size="3">
+                  <ion-item button mode="md" lines="none">
+                    <ion-label>
+                      <ion-icon src="assets/icon/intensity-1.svg"></ion-icon>
+                      <ion-radio [value]="1"></ion-radio>
+                    </ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="3">
+                  <ion-item button mode="md" lines="none">
+                    <ion-label>
+                      <ion-icon src="assets/icon/intensity-2.svg"></ion-icon>
+                      <ion-radio [value]="2"></ion-radio>
+                    </ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="3">
+                  <ion-item button mode="md" lines="none">
+                    <ion-label>
+                      <ion-icon src="assets/icon/intensity-3.svg"></ion-icon>
+                      <ion-radio [value]="3"></ion-radio>
+                    </ion-label>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="3">
+                  <ion-item button mode="md" lines="none">
+                    <ion-label>
+                      <ion-icon src="assets/icon/intensity-4.svg"></ion-icon>
+                      <ion-radio [value]="4"></ion-radio>
+                    </ion-label>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-radio-group>
+          </form>
+        </ng-container>
+      </ng-container>
+
+      <!-- OBJECTIVE -->
+      <form [formGroup]="formGroup" class="ion-margin-top" *ngIf="question.type !== 'neuro' && controls?.alternative">
+        <ion-radio-group formControlName="alternative">
+          <ion-item lines="none" mode="md" *ngFor="let alternative of question.alternatives; index as alternativeId">
+            <ion-radio slot="start" class="ion-margin-end" [value]="alternative.type || alternativeId"></ion-radio>
+            <ion-label class="ion-text-wrap">{{ alternative.text }}</ion-label>
+          </ion-item>
+        </ion-radio-group>
+      </form>
+    </ion-slide>
+  </ion-slides>
+
+  <div id="vertical-align" *ngIf="showSuccess">
+    <div class="container ion-text-center">
+      <ng-container *ngIf="!showProfile">
+        <h2>Obrigado por suas respostas</h2>
+
+        <ion-row>
+          <ion-col size="4" *ngIf="timer.hours">
+            <circle-progress [title]="timer.hours.toString()" subtitle="horas" [percent]="timer.hours / 0.6"></circle-progress>
+          </ion-col>
+          <ion-col [size]="timer.hours ? 4 : 6" *ngIf="timer.minutes">
+            <circle-progress [title]="timer.minutes.toString()" subtitle="minutos" [percent]="timer.minutes / 0.6"></circle-progress>
+          </ion-col>
+          <ion-col [size]="timer.hours ? 4 : (timer.minutes ? 6 : 12)">
+            <circle-progress [title]="timer.seconds.toString()" subtitle="segundos" [percent]="timer.seconds / 0.6"></circle-progress>
+          </ion-col>
+        </ion-row>
+
+        <h2>Seu tempo de conclusão</h2>
+      </ng-container>
+      
+      <ng-container *ngIf="showProfile">
+        <ion-grid id="resultProfile" class="ion-no-padding">
+          <ion-row>
+            <ion-col size="6">
+              <div class="animal" [class.active]="resultProfile.type === 'peacock'">
+                <img src="assets/animals/peacock.png" alt="">
+                <div class="bottom">
+                  <span class="name">Pavão</span>
+                  <span class="percent">{{ resultProfile.peacock | number: '1.0-2' }}%</span>
+                </div>
+              </div>
+            </ion-col>
+            <ion-col size="6">
+              <div class="animal" [class.active]="resultProfile.type === 'lion'">
+                <img src="assets/animals/lion.png" alt="">
+                <div class="bottom">
+                  <span class="name">Leão</span>
+                  <span class="percent">{{ resultProfile.lion | number: '1.0-2' }}%</span>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6">
+              <div class="animal" [class.active]="resultProfile.type === 'dog'">
+                <img src="assets/animals/dog.png" alt="">
+                <div class="bottom">
+                  <span class="name">Cachorro</span>
+                  <span class="percent">{{ resultProfile.dog | number: '1.0-2' }}%</span>
+                </div>
+              </div>
+            </ion-col>
+            <ion-col size="6">
+              <div class="animal" [class.active]="resultProfile.type === 'monkey'">
+                <img src="assets/animals/monkey.png" alt="">
+                <div class="bottom">
+                  <span class="name">Macaco</span>
+                  <span class="percent">{{ resultProfile.monkey | number: '1.0-2' }}%</span>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+        <h3>Seu {{ assessment.name }} é:</h3>
+
+        <ng-container *ngIf="resultProfile.type === 'dog'">
+          <h2>Cachorro</h2>
+          <h3>Relacional, lento para agir e emocional, focado em pessoas</h3>
+        </ng-container>
+        <ng-container *ngIf="resultProfile.type === 'lion'">
+          <h2>Leão</h2>
+          <h3>Dominante, rápido para agir e racional, focado em resultado</h3>
+        </ng-container>
+        <ng-container *ngIf="resultProfile.type === 'monkey'">
+          <h2>Macaco</h2>
+          <h3>Analítico, lento para agir e racional, focado em organização</h3>
+        </ng-container>
+        <ng-container *ngIf="resultProfile.type === 'peacock'">
+          <h2>Pavão</h2>
+          <h3>Reflexivo, rápido para agir e emocional, focado em inovação</h3>
+        </ng-container>
+      </ng-container>
+    </div>
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="start" slot="fixed" *ngIf="!isBeginning && !showSuccess">
+    <ion-fab-button color="dark" (click)="prev()">
+      <ion-icon name="caret-back"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="activeIndex !== assessment?._instructions.length - 1 && !isEnd && !showSuccess">
+    <ion-fab-button color="dark" (click)="next()">
+      <ion-icon name="caret-forward"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
+
+<ng-container *ngIf="assessment">
+  <ion-footer *ngIf="activeIndex === assessment._instructions.length - 1 || isEnd || showSuccess">
+    <ion-button type="button" expand="block" color="dark" *ngIf="!showSuccess" (click)="next()">
+      <span *ngIf="isEnd">Finalizar</span>
+      <span *ngIf="activeIndex === assessment._instructions.length - 1">Iniciar o Assessment</span>
+    </ion-button>
+
+    <ion-button type="button" expand="block" color="dark" (click)="goToBack()"
+      *ngIf="showSuccess && (assessment.type !== 'profile' || showProfile)">
+      Sair
+    </ion-button>
+
+    <ion-button type="button" expand="block" color="dark" (click)="showProfile = true"
+      *ngIf="showSuccess && (assessment.type === 'profile' && !showProfile)">
+      Ver Perfil
+    </ion-button>
+  </ion-footer>
+</ng-container>

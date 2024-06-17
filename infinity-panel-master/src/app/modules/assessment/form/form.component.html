@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Formulário de assessment</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formGroup">
+
+    <app-input label="Nome" [control]="controls.name"></app-input>
+
+    <app-input label="Tipo" type="select" [items]="types" [control]="controls.type"></app-input>
+
+    <app-input label="Duração máxima" [control]="controls.duration" hint="Valor em <b>minutos</b>!"></app-input>
+
+    <app-input label="Grupos" type="select" [multiple]="true" [items]="groups"
+      [control]="controls.groups"></app-input>
+
+    <app-input label="Instruções" type="select" [multiple]="true" [items]="instructions"
+      [control]="controls.instructions" selectName="title"></app-input>
+    
+    <app-input label="Campos obrigatórios" type="select" [multiple]="true" [items]="studentRequireds"
+      [control]="controls.studentRequireds"></app-input>
+
+  </form>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end center">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-raised-button color="primary" [disabled]="formGroup.invalid" *ngIf="!saving" (click)="onSubmit()">Salvar</button>
+  <mat-progress-spinner mode="indeterminate" diameter="25" class="ml-2" *ngIf="saving"></mat-progress-spinner>
+</div>

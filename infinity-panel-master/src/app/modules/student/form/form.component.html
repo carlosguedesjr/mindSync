@@ -1,0 +1,235 @@
+<div class="header">
+  <h2 class="title">Formulário de aluno</h2>
+</div>
+
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <div class="mat-card container mat-elevation-z8 p-3 mb-2">
+    <div class="img-uploaded" *ngIf="image">
+      <button mat-mini-fab type="button" color="warn" (click)="deleteImage()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <img [src]="image.path" alt="">
+    </div>
+    <ngx-dropzone (change)="takeImage($event)" accept="image/jpeg,image/jpg,image/png" [multiple]="false" class="mb-2" *ngIf="!image">
+      <ngx-dropzone-label>Arraste os arquivos aqui ou clique para fazer o upload.</ngx-dropzone-label>
+    </ngx-dropzone>
+    
+    <app-input label="Nome Completo" [control]="controls.name"></app-input>
+
+    <div fxLayout="row" fxLayoutGap="20px">
+      <div fxFlex="30">
+        <app-input label="Gênero" type="select" [items]="genres" [control]="controls.genre"></app-input>
+      </div>
+      <div fxFlex="30">
+        <app-input label="Estado Civil" type="select" [items]="civilStatus" [control]="controls.civilStatus"></app-input>
+      </div>
+      <div fxFlex="40">
+        <app-input label="Escolaridade" type="select" [items]="scholarities" [control]="controls.scholarity"></app-input>
+      </div>
+    </div>
+  
+    <div fxLayout="row" fxLayoutGap="20px">
+      <div fxFlex="50">
+        <app-input label="CPF" [mask]="{format: '000.000.000-00'}" [control]="controls.cpf"></app-input>
+      </div>
+      <div fxFlex="25">
+        <app-input label="RG" [control]="controls.rg"></app-input>
+      </div>
+      <div fxFlex="25">
+        <app-input label="Orgão Emissor" [control]="controls.rgEmitter"></app-input>
+      </div>
+    </div>
+  
+    <div fxLayout="row" fxLayoutGap="20px">
+      <div fxFlex="30">
+        <app-input label="Celular" [mask]="{format: '(00) 00000-0000'}" [control]="controls.phone"></app-input>
+      </div>
+      <div fxFlex="30">
+        <app-input label="Data de nascimento" type="datepicker" startView="multi-year" [control]="controls.dateBirth"></app-input>
+      </div>
+      <div fxFlex="40">
+        <app-input label="Filhos" type="number" [control]="controls.childrens"></app-input>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLACE BIRTH -->
+  <mat-card class="mat-elevation-z8 p-0 mb-2">
+    <mat-card-header class="py-3 px-1">
+      <mat-card-title class="mb-0">Naturalidade</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="p-3">
+      <div fxLayout="row" fxLayoutGap="20px">
+        <div fxFlex="50">
+          <app-input label="Estado" type="select" [items]="birthStates" selectId="uf" (inputChange)="birthStateChange()" [control]="controls.stateBirth"></app-input>
+        </div>
+        <div fxFlex="50">
+          <app-input label="Cidade" type="select" [items]="birthCities" selectId="name" [control]="controls.cityBirth"></app-input>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- ACCESS -->
+  <mat-card class="mat-elevation-z8 p-0 mb-2">
+    <mat-card-header class="py-3 px-1">
+      <mat-card-title class="mb-0">Acesso</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="p-3">
+      <app-input label="E-mail" type="email" [control]="controls.email"></app-input>
+
+      <div fxLayout="row" fxLayoutGap="20px" *ngIf="!data.id">
+        <mat-form-field fxFlex="50">
+          <mat-label>Senha</mat-label>
+          <input matInput [type]="togglePass ? 'password' : 'text'" formControlName="password">
+          <button mat-icon-button matSuffix type="button" (click)="togglePass = !togglePass">
+            <mat-icon>{{ togglePass ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="controls.password.hasError('required')">Senha é <strong>obrigatório!</strong></mat-error>
+          <mat-error *ngIf="controls.password.hasError('minlength')">A senha deve conter no mínimo <strong>6 caracteres</strong></mat-error>
+          <mat-error *ngIf="controls.password.hasError('pattern')">A senha deve conter <strong>letra e número</strong></mat-error>
+        </mat-form-field>
+        <mat-form-field fxFlex="50">
+          <mat-label>Confirme sua senha</mat-label>
+          <input matInput [type]="togglePass ? 'password' : 'text'" formControlName="confirmPass">
+          <button mat-icon-button matSuffix type="button" (click)="togglePass = !togglePass">
+            <mat-icon>{{ togglePass ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          <mat-error *ngIf="controls.confirmPass.hasError('required')">Confirme sua senha é <strong>obrigatório!</strong></mat-error>
+          <mat-error *ngIf="controls.confirmPass.hasError('passNotSame')">As senhas não <strong>coincidem!</strong></mat-error>
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- ADDRESS -->
+  <mat-card class="mat-elevation-z8 p-0 mb-2">
+    <mat-card-header class="py-3 px-1">
+      <mat-card-title class="mb-0">Endereço</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="p-3">
+      <div fxLayout="row" fxLayoutGap="20px">
+        <div fxFlex="50">
+          <app-input label="Logradouro" [control]="addressControls.street"></app-input>
+        </div>
+        <div fxFlex="30">
+          <app-input label="Bairro" [control]="addressControls.district"></app-input>
+        </div>
+        <div fxFlex="20">
+          <app-input label="Número" [control]="addressControls.number"></app-input>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="20px">
+        <div fxFlex="40">
+          <app-input label="Estado" type="select" [items]="addressStates" selectId="uf" (inputChange)="addressStateChange()" [control]="addressControls.state"></app-input>
+        </div>
+        <div fxFlex="40">
+          <app-input label="Cidade" type="select" [items]="addressCities" selectId="name" [control]="addressControls.city"></app-input>
+        </div>
+        <div fxFlex="20">
+          <app-input label="CEP" [mask]="{format: '00000-000'}" (keyup)="zipcodeChange()" [control]="addressControls.zipcode"></app-input>
+        </div>
+      </div>
+      <app-input label="Complemento" [control]="addressControls.complement"></app-input>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- FAMILY -->
+  <mat-card class="mat-elevation-z8 p-0 mb-2">
+    <mat-card-header class="py-3 px-1">
+      <mat-card-title class="mb-0">Família</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="p-3">
+      <div fxLayout="row" fxLayoutGap="20px">
+        <div fxFlex="50">
+          <app-input label="Nome da Mãe" [control]="controls.motherName"></app-input>
+        </div>
+        <div fxFlex="50">
+          <app-input label="Nome do Cônjuge" [control]="controls.spouseName"></app-input>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
+  <!-- COMPANY -->
+  <mat-card class="mat-elevation-z8 p-0 mb-2">
+    <mat-card-header class="py-3 px-1">
+      <mat-card-title class="mb-0">Empresa</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="p-3">
+      <div fxLayout="row" fxLayoutGap="20px">
+        <div fxFlex="50">
+          <app-input label="Empresa" type="select" [items]="companies" [control]="companyControls.companyId" (inputChange)="companyChange()"></app-input>
+        </div>
+        <div fxFlex="50">
+          <app-input label="Unidade" type="select" [items]="branches" [control]="companyControls.branchId" (inputChange)="branchChange()"></app-input>
+        </div>
+        <div fxFlex="50">
+          <app-input label="Entidade" type="select" [items]="departments" [control]="companyControls.departmentId" (inputChange)="departmentChange()"></app-input>
+        </div>
+        <div fxFlex="50">
+          <app-input label="Área" type="select" [items]="areas" [control]="companyControls.areaId" (inputChange)="areaChange()"></app-input>
+        </div>
+        <div fxFlex="50">
+          <app-input label="Cargo" type="select" [items]="posts" [control]="companyControls.postId"></app-input>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
+  <!-- COURSE -->
+  <mat-card class="mat-elevation-z8 p-0 mb-2">
+    <mat-card-header class="py-3 px-1">
+      <mat-card-title class="mb-0">Curso Superior</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="p-3">
+      <div fxLayout="row" fxLayoutGap="20px">
+        <div fxFlex="30">
+          <app-input label="Nome" [control]="courseControls.name"></app-input>
+        </div>
+        <div fxFlex="50">
+          <app-input label="Instituição" [control]="courseControls.institute"></app-input>
+        </div>
+        <div fxFlex="20">
+          <app-input label="Data de conclusão" type="number" [control]="courseControls.conclusion"></app-input>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="20px">
+        <div fxFlex="50">
+          <app-input label="Estado" type="select" [items]="courseStates" selectId="uf" (inputChange)="courseStateChange()" [control]="courseControls.state"></app-input>
+        </div>
+        <div fxFlex="50">
+          <app-input label="Cidade" type="select" [items]="courseCities" selectId="name" [control]="courseControls.city"></app-input>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- SOCIAL -->
+  <mat-card class="mat-elevation-z8 p-0 mb-2">
+    <mat-card-header class="py-3 px-1">
+      <mat-card-title class="mb-0">Social</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="p-3">
+      <div fxLayout="row" fxLayoutGap="20px">
+        <div fxFlex="30">
+          <app-input label="Linkedin" type="url" [control]="socialControls.linkedin"></app-input>
+        </div>
+        <div fxFlex="40">
+          <app-input label="Facebook" type="url" [control]="socialControls.facebook"></app-input>
+        </div>
+        <div fxFlex="30">
+          <app-input label="Instagram" type="url" [control]="socialControls.instagram"></app-input>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
+  <div fxLayoutAlign="end center">
+    <button mat-button type="button" (ckick)="goToBack()">Voltar</button>
+    <button mat-raised-button type="submit" color="primary" [disabled]="formGroup.invalid" *ngIf="!saving">Salvar</button>
+    <mat-progress-spinner mode="indeterminate" diameter="25" class="ml-2" *ngIf="saving"></mat-progress-spinner>
+  </div>
+</form>

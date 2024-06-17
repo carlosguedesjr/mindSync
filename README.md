@@ -1,1 +1,2 @@
-"# mindSync" 
+# Infinity-Neurobusiness
+Infinity Neurobusiness

@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Arquivo CSV</h2>
+
+<div mat-dialog-content>
+    <form [formGroup]="formGroupDiag" (ngSubmit)="exportCSV()">
+        <h4>Selecione o assessment e o código que deseja exportar:</h4>
+        <div fxLayout="row" fxLayoutGap="20px">
+            <div fxFlex="40">
+                <app-input label="Assessment" type="select" [items]="assessmentsDiag" [control]="controlsDiag.assessmentIdDiag">
+                </app-input>
+            </div>
+            <div fxFlex="30">
+                <app-input label="Código de acesso" type="select" [items]="accessListDiag" selectName="code"
+                    [control]="controlsDiag.accessIdDiag"></app-input>
+            </div>
+            <div fxFlex="20">
+                <button mat-raised-button color="primary" [disabled]="formGroupDiag.invalid"
+                    *ngIf="!loadingExp">Exportar</button>
+                <mat-progress-spinner mode="indeterminate" diameter="25" class="ml-2" *ngIf="loadingExp">
+                </mat-progress-spinner>
+            </div>
+        </div>
+    </form>
+</div>

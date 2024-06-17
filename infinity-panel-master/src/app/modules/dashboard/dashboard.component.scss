@@ -1,0 +1,23 @@
+.stats-cards {
+  .mat-card {
+    overflow: hidden;
+  }
+}
+#map {
+  height: 80vh;
+  position: relative;
+  .map {height: 100%;}
+  ng-lottie{
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #fff;
+    position: absolute;
+  }
+}
+ng-lottie {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

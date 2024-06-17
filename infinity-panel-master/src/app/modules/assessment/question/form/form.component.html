@@ -1,0 +1,71 @@
+<h1 mat-dialog-title>Formulário de questão</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formGroup">
+
+    <app-input label="Título" [control]="controls.title"></app-input>
+
+    <app-input label="Tipo" type="select" [items]="types" (inputChange)="changeType($event)"
+      [control]="controls.type">
+    </app-input>
+
+    <app-input label="Resposta" type="select" [items]="neuroResults" [control]="controls.result" *ngIf="controls.type.value == 'neuro'">
+    </app-input>
+
+    <app-input label="Pontos" type="number" [control]="controls.point" *ngIf="controls.type.value == 'objective'"></app-input>
+
+    <div id="recoms" class="mb-2" *ngIf="controls.type.value == 'neuro'">
+      <app-input label="Recomendação" [id]="'recom-'+i" [control]="controls.recom"></app-input>
+    </div>
+
+    <div id="alternatives" class="mb-2" *ngIf="controls.type.value != 'neuro'">
+      <div fxLayout="row" fxLayoutGap="20px">
+        <div fxFlex="50">
+          <div matLine><strong> Alternativas </strong></div>
+        </div>
+        <div fxFlex="50" class="text-end">
+          <button mat-mini-fab color="primary" (click)="addAlternative()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <table class="w-100">
+        <tbody formArrayName="alternatives">
+          <tr *ngFor="let formAlternative of controlAlternatives.controls; index as i">
+            <ng-container [formGroup]="formAlternative">
+              <td width="120" *ngIf="controls.type.value == 'objective'">
+                <app-input label="Correta?" type="toggle" [id]="'isCorrect-'+i" [control]="formAlternative.controls.isCorrect"></app-input>
+              </td>
+              <td width="100" *ngIf="controls.type.value == 'profile'">
+                <app-input label="Tipo" type="select" [items]="profileTypes" [control]="formAlternative.controls.type"></app-input>
+              </td>
+              <td class="text-center">
+                <app-input label="Texto" [id]="'text-'+i" [control]="formAlternative.controls.text"></app-input>
+              </td>
+              <td class="text-center">
+                <app-input label="Recomendação" [id]="'recom-'+i" [control]="formAlternative.controls.recom"></app-input>
+              </td>
+              <td width="50" class="text-end">
+                <button mat-icon-button color="warn" (click)="removeAlternative(i)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+          </tr>
+          <tr *ngIf="!controlAlternatives.controls.length">
+            <td class="text-center">
+              <a href="javascript:void(0)" (click)="addAlternative()">+ Adicionar alternativa</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <app-input type="html" label="Texto" [showLabel]="false" [control]="controls.text"></app-input>
+  </form>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end center">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-raised-button color="primary" [disabled]="formGroup.invalid" *ngIf="!saving" (click)="onSubmit()">Salvar</button>
+  <mat-progress-spinner mode="indeterminate" diameter="25" class="ml-2" *ngIf="saving"></mat-progress-spinner>
+</div>

@@ -1,0 +1,106 @@
+<div class="header" fxLayout="row" fxLayoutAlign="end center">
+  <div fxFlex="50" fxFlex.gt-md="80">
+    <h2 class="title">Alunos</h2>
+  </div>
+  <mat-form-field fxFlex="50" fxFlex.gt-md="20">
+    <mat-icon matPrefix>search</mat-icon>
+    <mat-label>Pesquisar</mat-label>
+    <input matInput [(ngModel)]="filter" name="filter" (keyup)="applyFilter()" placeholder="Ex. Pedro...">
+    <button mat-button matSuffix mat-icon-button *ngIf="filter" (click)="filter=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<div class="container mat-elevation-z8">
+  <div class="table-responsive">
+    <mat-table matSort [dataSource]="dataSource">
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell mat-sort-header *matHeaderCellDef> Nome </mat-header-cell>
+        <mat-cell matRipple *matCellDef="let element" fxFlexAlign="stretch" (click)="openDetail(element)"> {{
+          element.name }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <mat-header-cell mat-sort-header *matHeaderCellDef> E-mail </mat-header-cell>
+        <mat-cell matRipple *matCellDef="let element" fxFlexAlign="stretch" class="truncate"
+          (click)="openDetail(element)"> {{ element.email }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="company._department.name">
+        <mat-header-cell mat-sort-header *matHeaderCellDef fxLayoutAlign="center center"> Entidade </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxLayoutAlign="center center"> {{ element.company?._department?.name ||
+          '---' }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="company._area.name">
+        <mat-header-cell mat-sort-header *matHeaderCellDef fxLayoutAlign="center center"> Área </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxLayoutAlign="center center"> {{ element.company?._area?.name || '---' }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="company._post.name">
+        <mat-header-cell mat-sort-header *matHeaderCellDef fxLayoutAlign="center center"> Cargo </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxLayoutAlign="center center"> {{ element.company?._post?.name || '---' }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="deletedAt">
+        <mat-header-cell mat-sort-header *matHeaderCellDef fxFlex="10" fxLayoutAlign="center center"> Ativo
+        </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" fxLayoutAlign="center center">
+          <mat-icon color="warn" *ngIf="element.deletedAt">cancel</mat-icon>
+          <mat-icon color="success" *ngIf="!element.deletedAt">check_circle</mat-icon>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="image">
+        <mat-header-cell *matHeaderCellDef fxFlex="10" fxLayoutAlign="center center"> Imagem </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10" fxLayoutAlign="center center">
+          <img [src]="element.image ? element.image : 'assets/image/not-found-user.png'" class="thumbnail my-1" alt="">
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef fxFlex="10"> </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="10">
+          <button mat-icon-button color="primary" routerLink="formulario/{{ element.id }}" *ngIf="canUpdate">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button mat-icon-button [color]="element.deletedAt ? 'success' : 'warn'" (click)="confirmDelete(element)"
+            *ngIf="canDelete">
+            <mat-icon>{{ element.deletedAt ? 'check_circle' : 'delete' }}</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      <div class="noData" *matNoDataRow fxLayout="row">
+        <div fxFlex="grow" fxFlexAlign="center" class="text-center">Nenhum registro encontrado!</div>
+      </div>
+
+    </mat-table>
+    <mat-card class="mat-elevation-z8 p-0 mb-2">
+      <mat-card-content class="p-3">
+
+        <button mat-icon-button color="primary" *ngIf="!loadingExp" (click)="openExpModal()" >
+            <mat-icon>download</mat-icon>
+        </button>
+        <mat-progress-spinner mode="indeterminate" diameter="25" class="ml-2" *ngIf="loadingExp">
+        </mat-progress-spinner>
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+</div>
+
+<button mat-fab color="primary" class="fab-bottom-right" routerLink="formulario" *ngIf="canAdd">
+  <mat-icon>add</mat-icon>
+</button>

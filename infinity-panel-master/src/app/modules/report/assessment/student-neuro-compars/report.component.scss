@@ -1,0 +1,47 @@
+.student-thumbnail {
+  width: 10rem;
+  height: 10rem;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.infos {
+  .info {
+    padding: .5rem;
+    border: 2px solid #000;
+  }
+}
+
+.groups {
+  .group {
+    .diverge {color: #f44336;}
+    .converge {color: #009688;}
+    .diverge, .converge {
+      padding: .5rem;
+      border: 2px solid #000;
+    }
+    .name {
+      padding: .5rem;
+      border-left: 2px solid #000;
+      border-right: 2px solid #000;
+    }
+  }
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  td, th {padding: .5rem 1rem;}
+  .border {border: 1px solid #000;}
+  .vertical {
+    position: relative;
+    .vertical-content {
+      top: 50%;
+      left: 50%;
+      position: absolute;
+      white-space: nowrap;
+      transform: translate(-50%, -50%) rotate(-90deg);
+    }
+  }
+}

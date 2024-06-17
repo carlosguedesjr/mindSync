@@ -1,0 +1,35 @@
+<mat-toolbar color="primary">
+  <span>Questão</span>
+</mat-toolbar>
+<div mat-dialog-content>
+  
+  <mat-list>
+    <mat-list-item>
+      <mat-icon matListIcon>more_horiz</mat-icon>
+      <div matLine><strong> Título </strong></div>
+      <div matLine class="info"> {{ object.title }} </div>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon matListIcon>fact_check</mat-icon>
+      <div matLine><strong> Tipo </strong></div>
+      <div matLine class="info"> {{ object.getTypeName }} </div>
+    </mat-list-item>
+
+    <mat-list-item class="h-auto mb-2" *ngIf="object.alternatives.length">
+      <mat-icon matListIcon>fact_check</mat-icon>
+      <div matLine><strong> Alternativas </strong></div>
+      <div matLine>
+        <mat-chip-list>
+          <mat-chip *ngFor="let alternative of object.alternatives" color="primary" selected>{{ alternative.text }}</mat-chip>
+        </mat-chip-list>
+      </div>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon matListIcon color="warn" *ngIf="object.deletedAt">cancel</mat-icon>
+      <mat-icon matListIcon color="success" *ngIf="!object.deletedAt">check_circle</mat-icon>
+      <div matLine><strong> Ativo </strong></div>
+    </mat-list-item>
+  </mat-list>
+</div>

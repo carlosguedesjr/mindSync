@@ -1,0 +1,69 @@
+<h2 mat-dialog-title>Arquivo CSV</h2>
+
+<div mat-dialog-content>
+    <section class="example-section" [formGroup]="stFields">
+        <h4>Selecione os campos que deseja exportar:</h4>
+        <div fxLayout="row" fxLayoutGap="20px">
+            <div fxFlex="40">
+                <p>
+                    <mat-checkbox color="primary" formControlName="name">Nome</mat-checkbox>
+                </p>
+                <p>
+                    <mat-checkbox color="primary" formControlName="email">Email</mat-checkbox>
+                </p>
+                <p>
+                    <mat-checkbox color="primary" formControlName="phone">Telefone</mat-checkbox>
+                </p>
+                <p>
+                    <mat-checkbox color="primary" formControlName="genre">Genero</mat-checkbox>
+                </p>
+                <p>
+                    <mat-checkbox color="primary" formControlName="dateBirth">Data de Nascimento</mat-checkbox>
+                </p>
+                <p>
+                    <mat-checkbox color="primary" formControlName="childrens">Filhos</mat-checkbox>
+                </p>
+            </div>
+
+            <div fxFlex="30">
+                <p>
+                    <mat-checkbox color="primary" formControlName="cityBirth">Cidade Natal</mat-checkbox>
+                </p>
+                <p>
+                    <mat-checkbox color="primary" formControlName="stateBirth">Estado Natal</mat-checkbox>
+                </p>
+                <p>
+                    <mat-checkbox color="primary" formControlName="scholarity">Escolaridade</mat-checkbox>
+                </p>
+                <p>
+                    <mat-checkbox color="primary" formControlName="rg">RG</mat-checkbox>
+                </p>
+                <p>
+                    <mat-checkbox color="primary" formControlName="cpf">CPF</mat-checkbox>
+                </p>
+                <p>
+                    <mat-checkbox color="primary" formControlName="motherName">Nome da Mãe</mat-checkbox>
+                </p>
+            </div>
+            <div fxFlex="30">
+                <p>
+                    <mat-checkbox color="primary" formControlName="spouseName">Nome da Esposa</mat-checkbox>
+                </p>
+                <p>
+                    <mat-checkbox color="primary" formControlName="company">Empresa</mat-checkbox>
+                </p>
+                <p>
+                    <mat-checkbox color="primary" formControlName="generation">Geração</mat-checkbox>
+                </p>
+                <p>
+                    <mat-checkbox color="primary" formControlName="setenio">Setênio</mat-checkbox>
+                </p>
+            </div>
+        </div>
+    </section>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="primary" *ngIf="!loadingExp" (click)="exportar()">Exportar</button>
+    <mat-progress-spinner mode="indeterminate" diameter="25" class="ml-2" *ngIf="loadingExp">
+    </mat-progress-spinner>
+</div>

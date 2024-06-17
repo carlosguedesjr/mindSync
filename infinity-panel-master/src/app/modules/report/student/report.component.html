@@ -1,0 +1,83 @@
+<div class="header">
+  <h2 class="title">Relatório de Estudantes</h2>
+</div>
+
+<div class="container">
+  <mat-card class="mat-elevation-z8 p-0 mb-2">
+    <mat-card-content class="p-3">
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+        <div fxLayout="row" fxLayoutGap="20px">
+          <div fxFlex="45">
+            <app-input label="Assessment" type="select" [items]="assessments" [control]="controls.assessmentId"></app-input>
+          </div>
+          <div fxFlex="45">
+            <app-input label="Código de acesso" type="select" [items]="accessList" selectName="code" [control]="controls.accessId"></app-input>
+          </div>
+          <div fxFlex="10">
+            <button mat-raised-button color="primary" [disabled]="formGroup.invalid" *ngIf="!loading">Buscar</button>
+            <mat-progress-spinner mode="indeterminate" diameter="25" class="ml-2" *ngIf="loading"></mat-progress-spinner>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="mat-elevation-z8 p-0 mb-2" *ngIf="result">
+    <mat-card-content class="p-3">
+      <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+      <div class="table-responsive" *ngIf="!loading">
+        <table>
+          <thead>
+            <tr>
+              <th class="border">Nome</th>
+              <th class="border">Idade</th>
+              <th class="border">Telefone</th>
+              <th class="border">Perfil 1ª</th>
+              <th class="border">Perfil 2ª</th>
+              <th class="border">Genêro</th>
+              <th class="border">Setênio</th>
+              <th class="border">Geração</th>
+              <th class="border">Filhos</th>
+              <th class="border">Entidade</th>
+              <th class="border">Escolaridade</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- STUDENTS -->
+            <tr *ngFor="let application of result.applications">
+              <th class="border text-start">{{ application._student.name }}</th>
+              <td class="border">{{ application._student.getAge || '---' }}</td>
+              <td class="border">{{ application._student.phone || '---' }}</td>
+              <td class="border">
+                <ng-container *ngIf="!application._student.profiles">---</ng-container>
+                <ng-container *ngIf="application._student.profiles">
+                  <ng-container *ngIf="application._student.profiles[0].type === 'lion'">Leão</ng-container>
+                  <ng-container *ngIf="application._student.profiles[0].type === 'dog'">Cachorro</ng-container>
+                  <ng-container *ngIf="application._student.profiles[0].type === 'monkey'">Macaco</ng-container>
+                  <ng-container *ngIf="application._student.profiles[0].type === 'peacock'">Pavão</ng-container>
+                </ng-container>
+              </td>
+              <td class="border">
+                <ng-container *ngIf="!application._student.profiles">---</ng-container>
+                <ng-container *ngIf="application._student.profiles">
+                  <ng-container *ngIf="application._student.profiles[1].type === 'lion'">Leão</ng-container>
+                  <ng-container *ngIf="application._student.profiles[1].type === 'dog'">Cachorro</ng-container>
+                  <ng-container *ngIf="application._student.profiles[1].type === 'monkey'">Macaco</ng-container>
+                  <ng-container *ngIf="application._student.profiles[1].type === 'peacock'">Pavão</ng-container>
+                </ng-container>
+              </td>
+              <td class="border">{{ application._student.getGenre || '---' }}</td>
+              <td class="border">{{ application._student.getSeven }}</td>
+              <td class="border">{{ application._student.getGeneration || '---' }}</td>
+              <td class="border">{{ application._student.childrens || '---' }}</td>
+              <td class="border">{{ application._student.company._department?.name || '---' }}</td>
+              <td class="border">{{ application._student.scholarity || '---' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+

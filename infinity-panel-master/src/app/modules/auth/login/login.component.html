@@ -1,0 +1,23 @@
+
+<div class="container" fxLayout="row" fxLayoutAlign="center start">
+
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()" class="mat-elevation-z8" fxFlex="100" fxFlex.gt-md="30">
+
+    <div class="logo text-center">
+      <img src="assets/image/logo-mindsync-new.png" alt="" height="100">
+    </div>
+
+    <h2 class="title fw-bold">Bem vindo!</h2>
+    <p class="subtitle">Digite seu endereço de e-mail e senha para acessar o painel.</p>
+
+    <app-input label="E-mail" type="email" [control]="controls.email"></app-input>
+
+    <app-input label="Senha" type="password" [control]="controls.password"></app-input>
+
+    <button mat-raised-button type="submit" color="primary" [disabled]="loading">
+      <span *ngIf="!loading">Entrar</span>
+      <span *ngIf="loading">Entrando...</span>
+    </button>
+  </form>
+
+</div>

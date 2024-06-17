@@ -1,0 +1,39 @@
+<mat-toolbar color="primary">
+  <span>Área</span>
+</mat-toolbar>
+<div mat-dialog-content>
+  
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+  <mat-list *ngIf="!loading">
+    <mat-list-item>
+      <mat-icon matListIcon>more_horiz</mat-icon>
+      <div matLine><strong> Nome </strong></div>
+      <div matLine class="info"> {{ object.name }} </div>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon matListIcon>more_horiz</mat-icon>
+      <div matLine><strong> Empresa </strong></div>
+      <div matLine class="info"> {{ object._department._branch._company.name }} </div>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon matListIcon>more_horiz</mat-icon>
+      <div matLine><strong> Unidade </strong></div>
+      <div matLine class="info"> {{ object._department._branch.name }} </div>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon matListIcon>more_horiz</mat-icon>
+      <div matLine><strong> Entidade </strong></div>
+      <div matLine class="info"> {{ object._department.name }} </div>
+    </mat-list-item>
+
+    <mat-list-item>
+      <mat-icon matListIcon color="warn" *ngIf="object.deletedAt">cancel</mat-icon>
+      <mat-icon matListIcon color="success" *ngIf="!object.deletedAt">check_circle</mat-icon>
+      <div matLine><strong> Ativo </strong></div>
+    </mat-list-item>
+  </mat-list>
+</div>

@@ -1,0 +1,125 @@
+<mat-form-field *ngIf="type != 'datepicker' && type != 'daterangepicker' && type != 'html' && type != 'toggle'">
+  <!-- LABEL -->
+  <mat-label *ngIf="showLabel" [innerHtml]="label"></mat-label>
+
+  <!-- DEFAULT -->
+  <input
+    matInput
+    [id]="id" [type]="type" [ngClass]="class"
+    [formControl]="control" [maxlength]="maxlength"
+    [attr.cdkFocusInitial]="cdkFocus" [attr.inputmode]="inputmode"
+    [placeholder]="placeholder || 'Digite o ' + (label | lowercase)"
+    [mask]="mask?.format || ''" [prefix]="mask?.prefix || ''" [suffix]="mask?.suffix || ''" [dropSpecialCharacters]="!mask?.dropSpecialCharacters"
+    *ngIf="type != 'currency' && type != 'password' && type != 'select' && type != 'textarea' && type != 'datepicker'"
+  />
+  
+  <!-- PASSWORD -->
+  <input matInput [type]="togglePass ? 'password' : 'text'" [formControl]="control" *ngIf="type == 'password'"
+    [ngClass]="class" [placeholder]="placeholder || 'Digite a ' + (label | lowercase)">
+  <button mat-icon-button matSuffix type="button" (click)="togglePass = !togglePass" *ngIf="type == 'password'">
+    <mat-icon>{{ togglePass ? 'visibility_off' : 'visibility' }}</mat-icon>
+  </button>
+
+  <!-- CURRENCY -->
+  <input matInput currencyMask type="text" [options]="currencyOpts" [formControl]="control" *ngIf="type == 'currency'"
+    [ngClass]="class" [placeholder]="placeholder || 'Digite o ' + (label | lowercase)">
+
+  <!-- SELECT -->
+  <ng-container  *ngIf="type == 'select'">
+    <mat-select [id]="id" [formControl]="control" [attr.cdkFocusInitial]="cdkFocus"
+      [ngClass]="class" [multiple]="multiple" [placeholder]="placeholder || '---'"
+      (selectionChange)="emit('inputChange', $event)">
+      <mat-select-filter [array]="items" placeholder="Filtrar..." noResultsMessage="Nenhum registro encontrado"
+        [displayMember]="selectName" (filteredReturn)="filteredItems = $event"></mat-select-filter>
+      <mat-option *ngFor="let item of filteredItems" [value]="item[selectId]">{{ item[selectName] }}</mat-option>
+    </mat-select>
+  </ng-container>
+
+  <!-- TEXTAREA -->
+  <textarea matInput *ngIf="type == 'textarea'" [id]="id" [formControl]="control"
+    [placeholder]="placeholder || 'Digite o ' + (label | lowercase)" [ngClass]="class"
+    [attr.cdkFocusInitial]="cdkFocus"></textarea>
+
+  <!-- HINT -->
+  <mat-hint *ngIf="hint" [innerHtml]="hint"></mat-hint>
+  
+  <!-- ERROR -->
+  <mat-error *ngIf="control.errors">
+    <ng-container *ngTemplateOutlet="errors"></ng-container>
+  </mat-error>
+</mat-form-field>
+
+<!-- DATEPICKER -->
+<mat-form-field *ngIf="type == 'datepicker'">
+  <!-- LABEL -->
+  <mat-label *ngIf="showLabel" [innerHtml]="label"></mat-label>
+
+  <!-- PICKER -->
+  <input matInput [formControl]="control" [id]="id" [matDatepicker]="picker"
+    [attr.cdkFocusInitial]="cdkFocus" [ngClass]="class">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker [startView]="startView"></mat-datepicker>
+
+  <!-- HINT -->
+  <mat-hint *ngIf="hint" [innerHtml]="hint"></mat-hint>
+
+  <!-- ERROR -->
+  <mat-error *ngIf="control.errors">
+    <ng-container *ngTemplateOutlet="errors"></ng-container>
+  </mat-error>
+</mat-form-field>
+
+<!-- DATERANGEPICKER -->
+<mat-form-field *ngIf="type == 'daterangepicker'">
+  <!-- LABEL -->
+  <mat-label *ngIf="showLabel" [innerHtml]="label"></mat-label>
+
+  <!-- PICKER -->
+  <mat-date-range-input [rangePicker]="picker">
+    <input matStartDate [formControl]="control.controls.start">
+    <input matEndDate [formControl]="control.controls.end">
+  </mat-date-range-input>
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-date-range-picker #picker></mat-date-range-picker>
+
+  <!-- HINT -->
+  <mat-hint *ngIf="hint" [innerHtml]="hint"></mat-hint>
+
+  <!-- ERROR -->
+  <mat-error *ngIf="control.controls.start.hasError('required')">Data Inícial é <b>obrigatório</b>!</mat-error>
+  <mat-error *ngIf="control.controls.end.hasError('required')">Data Final é <b>obrigatório</b>!</mat-error>
+</mat-form-field>
+
+<div *ngIf="type == 'html' || type == 'toggle'" class="mat-form-field">
+  <!-- LABEL -->
+  <mat-label *ngIf="showLabel && type != 'toggle'" [innerHtml]="label"></mat-label>
+  
+  <!-- TOGGLE -->
+  <mat-slide-toggle *ngIf="type == 'toggle'" [id]="id" [formControl]="control" color="primary" [ngClass]="class">{{ label }}</mat-slide-toggle>
+  
+  <!-- HTML -->
+  <quill-editor *ngIf="type == 'html'" [id]="id" [formControl]="control" [placeholder]="placeholder || 'Insira o texto aqui...'"
+    [attr.cdkFocusInitial]="cdkFocus" [styles]="{minHeight: '200px'}" [ngClass]="class"></quill-editor>
+
+  <!-- HINT -->
+  <mat-hint *ngIf="hint" [innerHtml]="hint"></mat-hint>
+
+  <!-- ERROR -->
+  <mat-error *ngIf="(control.dirty || control.touched) && control.invalid" class="mt-1" style="font-size: 80%;">
+    <ng-container *ngTemplateOutlet="errors"></ng-container>
+  </mat-error>
+</div>
+
+<!-- ERRORS -->
+<ng-template #errors>
+  <div *ngIf="control.errors.cpf">CPF está <b>inválido</b>!</div>
+  <div *ngIf="control.errors.cnpj">CNPJ está <b>inválido</b>!</div>
+  <div *ngIf="control.errors.email">E-mail está <b>inválido</b>!</div>
+  <div *ngIf="control.errors.exist">{{ label }} já <b>existe</b>!</div>
+  <div *ngIf="control.errors.required">{{ label }} é <b>obrigatório</b>!</div>
+  <div *ngIf="control.errors.pattern">{{ label }} com caracteres <b>inválido</b>!</div>
+  <div *ngIf="control.errors.invalid || control.errors.mask">{{ label }} <b>inválido</b>!</div>
+
+  <div *ngIf="control.errors.min">Valor mínimo <b>{{ control.errors.min.min }}</b>, atual <b>{{ control.errors.min.actual }}</b>!</div>
+  <div *ngIf="control.errors.max">Valor máximo <b>{{ control.errors.max.max }}</b>, atual <b>{{ control.errors.max.actual }}</b>!</div>
+</ng-template>

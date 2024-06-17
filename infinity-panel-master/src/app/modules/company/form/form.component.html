@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>Formulário de empresa</h1>
+<div mat-dialog-content>
+  <form [formGroup]="formGroup">
+
+    <div class="img-uploaded" *ngIf="image">
+      <button mat-mini-fab color="warn" (click)="deleteImage()">
+        <mat-icon>delete</mat-icon>
+      </button>
+      <img [src]="image.path" alt="">
+    </div>
+    <ngx-dropzone (change)="takeImage($event)" accept="image/jpeg,image/jpg,image/png" [multiple]="false" class="mb-2" *ngIf="!image">
+      <ngx-dropzone-label>Arraste os arquivos aqui ou clique para fazer o upload.</ngx-dropzone-label>
+    </ngx-dropzone>
+
+    <app-input label="Nome" [control]="controls.name"></app-input>
+
+  </form>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end center">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-raised-button color="primary" [disabled]="formGroup.invalid" *ngIf="!saving" (click)="onSubmit()">Salvar</button>
+  <mat-progress-spinner mode="indeterminate" diameter="25" class="ml-2" *ngIf="saving"></mat-progress-spinner>
+</div>

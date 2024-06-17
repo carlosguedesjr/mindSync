@@ -1,0 +1,46 @@
+<mat-toolbar color="primary">
+  <mat-icon>warning</mat-icon>
+  <span class="ml-2">
+    <p class="mb-0">
+      <ng-container *ngIf="data.action === 'enable'">Ativar</ng-container>
+      <ng-container *ngIf="data.action === 'disable'">Desativar</ng-container>
+      <ng-container *ngIf="data.action === 'delete'">Excluir</ng-container>
+      este registro?
+    </p>
+    <small>
+      Esta ação
+      <ng-container *ngIf="data.action === 'enable'">ativará</ng-container>
+      <ng-container *ngIf="data.action === 'disable'">desativará</ng-container>
+      <ng-container *ngIf="data.action === 'delete'">excluirá permanentemente</ng-container>
+      o registro.
+    </small>
+  </span>
+</mat-toolbar>
+<div mat-dialog-content>
+  <form [formGroup]="formGroup">
+    <p>
+      Confirme a
+      <ng-container *ngIf="data.action === 'enable'">ativação</ng-container>
+      <ng-container *ngIf="data.action === 'disable'">desativação</ng-container>
+      <ng-container *ngIf="data.action === 'delete'">exclusão</ng-container>
+      desse registro inserindo: 
+      <strong *ngIf="data.action === 'enable'">ATIVAR</strong>
+      <strong *ngIf="data.action === 'disable'">DESATIVAR</strong>
+      <strong *ngIf="data.action === 'delete'">EXCLUIR</strong>
+    </p>
+    <mat-form-field>
+      <mat-label>Confirmação</mat-label>
+      <input matInput formControlName="confirm" [placeholder]="placeholder">
+      <mat-error *ngIf="controls.confirm.hasError('required')">Confirmação é <strong>obrigatório!</strong></mat-error>
+      <mat-error *ngIf="controls.confirm.hasError('invalid')">Confirmação <strong>inválida!</strong></mat-error>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-raised-button [color]="data.action === 'enable' ? 'success' : 'warn'" [disabled]="formGroup.invalid" (click)="onSubmit()">
+    <ng-container *ngIf="data.action === 'enable'">Ativar</ng-container>
+    <ng-container *ngIf="data.action === 'disable'">Desativar</ng-container>
+    <ng-container *ngIf="data.action === 'delete'">Excluir</ng-container>
+  </button>
+</div>

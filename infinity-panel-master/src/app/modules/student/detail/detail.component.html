@@ -1,0 +1,207 @@
+<mat-toolbar color="primary">
+  <img class="thumbnail-sm mr-1" [src]="object.image ? object.image : 'assets/image/not-found-user.png'" alt="">
+  <span>{{ object.name }}</span>
+</mat-toolbar>
+<div mat-dialog-content>
+  
+  <mat-list>
+    <mat-list-item>
+      <mat-icon matListIcon>alternate_email</mat-icon>
+      <div matLine><strong> E-mail </strong></div>
+      <div matLine class="info"> {{ object.email || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>transgender</mat-icon>
+      <div matLine><strong> Gênero </strong></div>
+      <div matLine class="info"> {{ object.getGenre || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>wc</mat-icon>
+      <div matLine><strong> Estado Civil </strong></div>
+      <div matLine class="info"> {{ object.getCivilStatus || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>school</mat-icon>
+      <div matLine><strong> Escolaridade </strong></div>
+      <div matLine class="info"> {{ object.scholarity || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>contact_mail</mat-icon>
+      <div matLine><strong> CPF </strong></div>
+      <div matLine class="info"> {{ (object.cpf | mask:'000.000.000-00') || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>contact_mail</mat-icon>
+      <div matLine><strong> RG </strong></div>
+      <div matLine class="info"> {{ object.rg || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>contact_mail</mat-icon>
+      <div matLine><strong> Orgão Emissor </strong></div>
+      <div matLine class="info"> {{ object.rgEmitter || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>call</mat-icon>
+      <div matLine><strong> Telefone </strong></div>
+      <div matLine class="info"> {{ (object.phone | mask:'(00) 00000-0000|(00) 0000-0000') || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>child_friendly</mat-icon>
+      <div matLine><strong> Data de nascimento </strong></div>
+      <div matLine class="info"> {{ (object.dateBirth | date:'dd/MM/yyyy') || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>baby_changing_station</mat-icon>
+      <div matLine><strong> Filhos </strong></div>
+      <div matLine class="info"> {{ object.childrens || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>baby_changing_station</mat-icon>
+      <div matLine><strong> Filhos </strong></div>
+      <div matLine class="info"> {{ object.childrens || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon color="warn" *ngIf="object.deletedAt">cancel</mat-icon>
+      <mat-icon matListIcon color="success" *ngIf="!object.deletedAt">check_circle</mat-icon>
+      <div matLine><strong> Ativo </strong></div>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+    <h3 matSubheader>Naturalidade</h3>
+    <mat-list-item>
+      <mat-icon matListIcon>flag</mat-icon>
+      <div matLine><strong> Cidade </strong></div>
+      <div matLine class="info"> {{ object.cityBirth || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>flag</mat-icon>
+      <div matLine><strong> Estado </strong></div>
+      <div matLine class="info"> {{ object.stateBirth || '---' }} </div>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+    <h3 matSubheader>Endereço</h3>
+    <mat-list-item>
+      <mat-icon matListIcon>traffic</mat-icon>
+      <div matLine><strong> Logradouro </strong></div>
+      <div matLine class="info"> {{ object.address?.street || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>pin</mat-icon>
+      <div matLine><strong> Número </strong></div>
+      <div matLine class="info"> {{ object.address?.number || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>traffic</mat-icon>
+      <div matLine><strong> Bairro </strong></div>
+      <div matLine class="info"> {{ object.address?.district || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>pin</mat-icon>
+      <div matLine><strong> CEP </strong></div>
+      <div matLine class="info"> {{ (object.address?.zipcode | mask:'00000-000') || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>flag</mat-icon>
+      <div matLine><strong> Cidade </strong></div>
+      <div matLine class="info"> {{ object.address?.city || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>flag</mat-icon>
+      <div matLine><strong> Estado </strong></div>
+      <div matLine class="info"> {{ object.address?.state || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>more_horiz</mat-icon>
+      <div matLine><strong> Complemento </strong></div>
+      <div matLine class="info"> {{ object.address?.complement || '---' }} </div>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+    <h3 matSubheader>Família</h3>
+    <mat-list-item>
+      <mat-icon matListIcon>more_horiz</mat-icon>
+      <div matLine><strong> Nome da Mãe </strong></div>
+      <div matLine class="info"> {{ object.motherName || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>more_horiz</mat-icon>
+      <div matLine><strong> Nome do Cônjuge </strong></div>
+      <div matLine class="info"> {{ object.spouseName || '---' }} </div>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+    <h3 matSubheader>Empresa</h3>
+    <mat-list-item>
+      <mat-icon matListIcon>more_horiz</mat-icon>
+      <div matLine><strong> Empresa </strong></div>
+      <div matLine class="info"> {{ object.company?._company?.name || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>more_horiz</mat-icon>
+      <div matLine><strong> Unidade </strong></div>
+      <div matLine class="info"> {{ object.company?._branch?.name || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>more_horiz</mat-icon>
+      <div matLine><strong> Entidade </strong></div>
+      <div matLine class="info"> {{ object.company?._department?.name || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>more_horiz</mat-icon>
+      <div matLine><strong> Área </strong></div>
+      <div matLine class="info"> {{ object.company?._area?.name || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>more_horiz</mat-icon>
+      <div matLine><strong> Cargo </strong></div>
+      <div matLine class="info"> {{ object.company?._post?.name || '---' }} </div>
+    </mat-list-item>
+
+    <mat-divider></mat-divider>
+    <h3 matSubheader>Curso Superior</h3>
+    <mat-list-item>
+      <mat-icon matListIcon>more_horiz</mat-icon>
+      <div matLine><strong> Nome </strong></div>
+      <div matLine class="info"> {{ object.course?.name || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>apartment</mat-icon>
+      <div matLine><strong> Intituição </strong></div>
+      <div matLine class="info"> {{ object.course?.institute || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>event</mat-icon>
+      <div matLine><strong> Conclusão </strong></div>
+      <div matLine class="info"> {{ (object.course?.conclusion | date:'dd/MM/yyyy') || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>flag</mat-icon>
+      <div matLine><strong> Cidade </strong></div>
+      <div matLine class="info"> {{ object.course?.city || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>flag</mat-icon>
+      <div matLine><strong> Estado </strong></div>
+      <div matLine class="info"> {{ object.course?.state || '---' }} </div>
+    </mat-list-item>
+    
+    <mat-divider></mat-divider>
+    <h3 matSubheader>Social</h3>
+    <mat-list-item>
+      <mat-icon matListIcon>share</mat-icon>
+      <div matLine><strong> Linkedin </strong></div>
+      <div matLine class="info"> {{ object.social?.linkedin || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>facebook</mat-icon>
+      <div matLine><strong> Facebook </strong></div>
+      <div matLine class="info"> {{ object.social?.facebook || '---' }} </div>
+    </mat-list-item>
+    <mat-list-item>
+      <mat-icon matListIcon>share</mat-icon>
+      <div matLine><strong> Instagram </strong></div>
+      <div matLine class="info"> {{ object.social?.instagram || '---' }} </div>
+    </mat-list-item>
+  </mat-list>
+</div>
