@@ -96,14 +96,31 @@ ion-item {
   margin: 0 0 10px 0;
  }
 
-.bgColor {
-  background-image: url('../src/assets/fundo-app-WEB.png');
-  background-position: center;
-  background-size: auto;
-  background-repeat: repeat;
-  padding: 20px 10px 20px 10px;
+ ion-title{
+  color: white;
  }
 
+ body, ion-app, ion-content {
+  // background-image: url('../src/assets/fundo-app-WEB.png') !important;
+  --ion-background-color: url('../src/assets/fundo-app-WEB.png')  no-repeat center ;
+  background-position: center ;
+  background-size: auto ;
+}
+
+
+.responsive-button {
+  width: 100%; // Por padrão, o botão ocupa 100% do espaço
+  align-items: center;
+  @media (min-width: 768px) {
+    // Quando a largura da tela for de 768px ou mais (desktop)
+    width: 50%;
+  }
+}
+.responsive-list{
+  align-items: center;
+    display: flex;
+    justify-content: center;
+}
 
 @media (max-width: 991px) {
   #list-empty {min-height: 100%;}

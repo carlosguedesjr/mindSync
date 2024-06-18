@@ -6,7 +6,7 @@
 </ion-header>
 
 <ion-content class="ion-padding" *ngIf="!loading">
-  <div class="bgColor">
+  <div>
     <ion-avatar [class.required]="imageRequired">
       <ion-img *ngIf="data?.image" [src]="data.image"></ion-img>
       <ion-icon *ngIf="!data?.image" color="dark" src="assets/icon/icon-no-image.svg"></ion-icon>

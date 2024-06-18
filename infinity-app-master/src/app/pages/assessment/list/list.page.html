@@ -10,8 +10,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-list *ngIf="items?.length">
-    <ion-item button detail="false" lines="none" *ngFor="let item of items" color="dark" routerLink="/assessment/{{ item.id }}/{{ item._accessId }}">
+  <ion-list *ngIf="items?.length" class="responsive-list">
+    <ion-item button detail="false" class="responsive-button" lines="none" *ngFor="let item of items" color="dark" routerLink="/assessment/{{ item.id }}/{{ item._accessId }}">
       <ion-label class="ion-text-center">{{ item.name }}</ion-label>
     </ion-item>
   </ion-list>
