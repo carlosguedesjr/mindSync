@@ -69,6 +69,10 @@ ion-alert {
   }
 }
 
+ion-icon, ion-label{
+  color: --ion-color-primary;
+}
+
 .ql-editor {
   padding: 0;
   .ql-video {
@@ -97,7 +101,7 @@ ion-item {
  }
 
  ion-title{
-  color: white;
+  color: --ion-color-primary;;
  }
 
  body, ion-app, ion-content {
