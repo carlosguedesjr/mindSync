@@ -111,6 +111,9 @@ ion-item {
   background-size: auto ;
 }
 
+ion-header{
+  --ion-background-color: url('../src/assets/fundo-app-WEB.png');
+}
 
 .responsive-button {
   width: 100%; // Por padrão, o botão ocupa 100% do espaço
