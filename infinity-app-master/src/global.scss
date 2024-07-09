@@ -1,3 +1,149 @@
+// /*
+//  * App Global CSS
+//  * ----------------------------------------------------------------------------
+//  * Put style rules here that you want to apply globally. These styles are for
+//  * the entire app and not just one component. Additionally, this file can be
+//  * used as an entry point to import other CSS/Sass files to be included in the
+//  * output CSS.
+//  * For more information on global stylesheets, visit the documentation:
+//  * https://ionicframework.com/docs/layout/global-stylesheets
+//  */
+
+// /* Core CSS required for Ionic components to work properly */
+// @import "~@ionic/angular/css/core.css";
+
+// /* Basic CSS for apps built with Ionic */
+// @import "~@ionic/angular/css/normalize.css";
+// @import "~@ionic/angular/css/structure.css";
+// @import "~@ionic/angular/css/typography.css";
+// @import '~@ionic/angular/css/display.css';
+
+// /* Optional CSS utils that can be commented out */
+// @import "~@ionic/angular/css/padding.css";
+// @import "~@ionic/angular/css/float-elements.css";
+// @import "~@ionic/angular/css/text-alignment.css";
+// @import "~@ionic/angular/css/text-transformation.css";
+// @import "~@ionic/angular/css/flex-utils.css";
+
+// ion-button {text-transform: none;}
+// ion-list {background: transparent !important;}
+// ion-alert, ion-picker, ion-modal, ion-loading, ion-menu {backdrop-filter: blur(7px);}
+
+// img.dark {display: none;}
+
+// #vertical-align {
+//   display: flex;
+//   min-height: 100%;
+//   align-items: center;
+//   justify-content: center;
+// }
+
+// #list-empty {
+//   display: flex;
+//   align-items: center;
+
+//   & > div {
+//     width: 100%;
+
+//     h4 {color: var(--ion-color-step-500);}
+//     ion-icon {font-size: 5rem;}
+//   }
+// }
+
+// ion-item {
+//   --background: none;
+//   --padding-start: .5rem;
+//   --inner-padding-end: .5rem;
+// }
+
+// ion-button {
+//   height: auto;
+//   --border-radius: 1rem;
+//   --padding-top: 1.1rem;
+//   --padding-bottom: 1.1rem;
+// }
+
+// ion-alert {
+//   .alert-radio-group .alert-radio-label {
+//     white-space: pre-wrap;
+//   }
+// }
+
+// ion-icon, ion-label{
+//   color: --ion-color-primary;
+// }
+
+// .ql-editor {
+//   padding: 0;
+//   .ql-video {
+//     width: 100%;
+//     min-height: 12rem;
+//   }
+// }
+
+// // ion-content{
+// //   --padding-top: 100px !important;
+// //   }
+
+// ion-content {
+//   --padding-top: 0 !important;
+//   --padding-left: 0 !important;
+//   --padding-right: 0 !important;
+//   --padding-bottom: 0 !important;
+
+// }
+
+// ion-item {
+//   background: #fff !important;
+//   border-radius: 15px !important;
+//   padding: 5px !important;
+//   margin: 0 0 10px 0;
+//  }
+
+//  ion-title{
+//   color: --ion-color-primary;
+//  }
+
+//  toolbar-container{
+//   color: #fff !important;
+//  }
+
+//  body, ion-app, ion-content {
+//   // background-image: url('../src/assets/fundo-app-WEB.png') !important;
+//   --ion-background-color: url('../src/assets/fundo-app-WEB.png')  no-repeat center ;
+//   background-position: center ;
+//   background-size: auto ;
+// }
+
+// ion-header{
+//   --ion-background-color: url('../src/assets/fundo-app-WEB.png');
+// }
+
+// .responsive-button {
+//   width: 100%; // Por padrão, o botão ocupa 100% do espaço
+//   align-items: center;
+//   @media (min-width: 768px) {
+//     // Quando a largura da tela for de 768px ou mais (desktop)
+//     width: 50%;
+//   }
+// }
+// .responsive-list{
+//   align-items: center;
+//     display: flex;
+//     justify-content: center;
+// }
+
+// @media (max-width: 991px) {
+//   #list-empty {min-height: 100%;}
+// }
+// @media (prefers-color-scheme: dark) {
+//   img.dark {display: initial;}
+//   img.light {display: none;}
+// }
+
+
+
+
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
@@ -69,41 +215,6 @@ ion-alert {
   }
 }
 
-ion-icon, ion-label{
-  color: --ion-color-primary;
-}
-
-.ql-editor {
-  padding: 0;
-  .ql-video {
-    width: 100%;
-    min-height: 12rem;
-  }
-}
-
-// ion-content{
-//   --padding-top: 100px !important;
-//   }
-
-ion-content {
-  --padding-top: 0 !important;
-  --padding-left: 0 !important;
-  --padding-right: 0 !important;
-  --padding-bottom: 0 !important;
-
-}
-
-ion-item {
-  background: #fff !important;
-  border-radius: 15px !important;
-  padding: 5px !important;
-  margin: 0 0 10px 0;
- }
-
- ion-title{
-  color: --ion-color-primary;;
- }
-
  body, ion-app, ion-content {
   // background-image: url('../src/assets/fundo-app-WEB.png') !important;
   --ion-background-color: url('../src/assets/fundo-app-WEB.png')  no-repeat center ;
@@ -115,6 +226,27 @@ ion-header{
   --ion-background-color: url('../src/assets/fundo-app-WEB.png');
 }
 
+
+// // ion-content{
+// //   --padding-top: 100px !important;
+// //   }
+
+// ion-content {
+//   --padding-top: 0 !important;
+//   --padding-left: 0 !important;
+//   --padding-right: 0 !important;
+//   --padding-bottom: 0 !important;
+
+// }
+
+ion-item {
+  background: #fff !important;
+  border-radius: 15px !important;
+  padding: 5px !important;
+  margin: 0 0 10px 0;
+ }
+
+
 .responsive-button {
   width: 100%; // Por padrão, o botão ocupa 100% do espaço
   align-items: center;
@@ -123,10 +255,13 @@ ion-header{
     width: 50%;
   }
 }
-.responsive-list{
-  align-items: center;
-    display: flex;
-    justify-content: center;
+
+.ql-editor {
+  padding: 0;
+  .ql-video {
+    width: 100%;
+    min-height: 12rem;
+  }
 }
 
 @media (max-width: 991px) {
